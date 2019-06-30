@@ -1,0 +1,6 @@
+[submodule "PLY"]
+	path = PLY
+	url = https://github.com/dabeaz/ply.git
+[submodule "llvmlite"]
+	path = llvmlite
+	url = https://github.com/numba/llvmlite.git
