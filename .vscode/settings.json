@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Python37\\python.exe"
+    "python.pythonPath": "C:\\Python37\\python.exe",
+    //"python.envFile": "${workspaceFolder}//src//dev.env"
+    "python.envFile": "${workspaceFolder}\\exp.env"
 }
