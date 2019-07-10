@@ -1,5 +1,9 @@
 {
     "python.pythonPath": "C:\\Python37\\python.exe",
-    //"python.envFile": "${workspaceFolder}//src//dev.env"
-    "python.envFile": "${workspaceFolder}\\exp.env"
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH":"${workspaceFolder}\\PLY\\ply",
+        "MYENV":"hellokitty"
+    },
+    "python.envFile": "${workspaceFolder}\\exp.env",
+    "code-runner.runInTerminal": true
 }
