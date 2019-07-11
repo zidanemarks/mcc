@@ -8,4 +8,4 @@ a=os.getenv("MYENV")
 print(a)
 #
 #aa=os.getenv("MYENV1")
-#print(aa)
+#print(aaud
