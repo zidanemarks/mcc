@@ -1,7 +1,7 @@
 {
     "python.pythonPath": "C:\\Python37\\python.exe",
     "terminal.integrated.env.windows": {
-        "PYTHONPATH":"${workspaceFolder}\\PLY\\ply",
+        "PYTHONPATH":"${workspaceFolder}\\PLY",
         "MYENV":"hellokitty"
     },
     "python.envFile": "${workspaceFolder}\\exp.env",

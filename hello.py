@@ -1,5 +1,5 @@
-#from ply import lex
-import lex
+import ply.lex as lex
+#import lex
 print("hello work ")
 import os
 
