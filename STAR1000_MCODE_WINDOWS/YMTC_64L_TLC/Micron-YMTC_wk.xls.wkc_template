@@ -1,0 +1,10 @@
+WC(.CMD_OP_CNT([24+:8]), .DQS_TERM([10+:1]), .DQS_T([9+:1]), .DQS([8+:1]), .REN([7+:1]), .TERM([6+:1]), .T([5+:1]), .CE([4+:1]))
+CL(.CLINE_NUM([4+:8]))
+WI(.DATA_CYCLES([16+:16]), .RW_OP_CNT([10+:6]), .CMD_SDR([4+:4]))
+ICD(.CMD_OP_CNT([24+:8]), .DQ_PAT([10+:8]), .CMD_VALID([7+:3]), .CMD_PRE([4+:3]))
+RIDDR(.DATA_CYCLES([16+:16]), .WARMUP_CNT([4+:4]))
+IC(.CMD_OP_CNT([24+:8]), .DQ_PINDEX([10+:8]), .CMD_VALID([7+:3]), .CMD_PRE([4+:3]))
+WIDDR(.DATA_CYCLES([16+:16]), .PINDEX([9+:3]), .SR([8+:1]), .WARMUP_CNT([4+:4]))
+IE
+RI(.DATA_CYCLES([16+:16]), .RW_OP_CNT([10+:6]))
+RESERVED_CMD

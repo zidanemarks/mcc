@@ -1,0 +1,4050 @@
+0x00000000 : 00004004
+            LABEL_0:
+            matop       r0, C_READ_DDR, 0, 0
+0x00000001 : 30e00005
+            jnz         LABEL_READ_TLC_ENTRY, r0, 0
+0x00000002 : 0000b004
+            matop       r0, C_16K_READ_DDR, 0, 0
+0x00000003 : 33c00005
+            jnz         LABEL_PAGE_READ_TLC_ENTRY, r0, 0
+0x00000004 : 0000e004
+            matop       r0, C_16K_SLC_READ_DDR, 0, 0
+0x00000005 : 33e00005
+            jnz         LABEL_PAGE_READ_SLC_ENTRY, r0, 0
+0x00000006 : 00009004
+            matop       r0, C_READ_SLC, 0, 0
+0x00000007 : 31000005
+            jnz         LABEL_READ_SLC_ENTRY, r0, 0
+0x00000008 : 00006004
+            matop       r0, C_READ_REY, 0, 0
+0x00000009 : 5c000005
+            jnz         LABEL_RR_ENTRY, r0, 0
+0x0000000a : 00008004
+            matop       r0, C_PROG_SLC, 0, 0
+0x0000000b : 30100005
+            jnz         LABEL_PROG_SLC_ENTRY, r0, 0
+0x0000000c : 0000a004
+            matop       r0, C_PROG_SLC_1CMD_2PLANE, 0, 0
+0x0000000d : 2f800005
+            jnz         LABEL_PROG_SLC_ENTRY_1CMD_2PLANE, r0, 0
+0x0000000e : 00002004
+            matop       r0, C_PROG_NATIVE, 0, 0
+0x0000000f : 16200005
+            jnz         LABEL_PROG_NATIVE_ENTRY, r0, 0
+0x00000010 : 00003004
+            matop       r0, C_PROG_NATIVE_1CMD_2PLANE, 0, 0
+0x00000011 : 15d00005
+            jnz         LABEL_PROG_NATIVE_ENTRY_1CMD_2PLANE, r0, 0
+0x00000012 : 0000d004
+            matop       r0, C_PROG_DUMMY, 0, 0
+0x00000013 : 14000005
+            jnz         LABEL_PROG_DUMMY_ENTRY, r0, 0
+0x00000014 : 00001004
+            matop       r0, C_ERASE, 0, 0
+0x00000015 : 0cd00005
+            jnz         LABEL_SYNC_ERASE_XLC_ENTRY, r0, 0
+0x00000016 : 0000f004
+            matop       r0, C_RAW_CMD, 0, 0
+0x00000017 : 02e00005
+            jnz         LABEL_RAW_CMD_ENTRY, r0, 0
+0x00000018 : 00000004
+            matop       r0, C_INIT_DEB, 0, 0
+0x00000019 : 01c00005
+            jnz         LABEL_INIT_DEB_ENTRY, r0, 0
+0x0000001a : 00010003
+            incptr    0, 1
+0x0000001b : 0000001f
+            end
+0x0000001c : 80000010
+            LABEL_INIT_DEB_ENTRY:
+            matcl       r0, C_INIT_CTRL_RST,   0, 0, SET_OFFSET_DIRECT
+0x0000001d : 04200005
+            jnz         LABEL_RST_ENTRY, r0, 0
+0x0000001e : 80001010
+            matcl       r0, C_INIT_CTRL_HD_RST, 0, 0, SET_OFFSET_DIRECT
+0x0000001f : 05100005
+            jnz         LABEL_SYNC_HD_RST_ENTRY, r0, 0
+0x00000020 : 80008010
+            matcl       r0, C_INIT_CTRL_RDID, 0, 0, SET_OFFSET_DIRECT
+0x00000021 : 06500005
+            jnz         LABEL_SYNC_RDID_ENTRY, r0, 0
+0x00000022 : 80004010
+            matcl       r0, C_INIT_CTRL_SETF_BY_ADDR, 0, 0, SET_OFFSET_DIRECT
+0x00000023 : 07500005
+            jnz         LABEL_SYNC_SETF_BY_ADDR_ENTRY, r0, 0
+0x00000024 : 80009010
+            matcl       r0, C_INIT_CTRL_SETF_BY_LUN, 0, 0, SET_OFFSET_DIRECT
+0x00000025 : 08a00005
+            jnz         LABEL_SYNC_SETF_BY_LUN_ENTRY, r0, 0
+0x00000026 : 80005010
+            matcl       r0, C_INIT_CTRL_GETF_BY_ADDR, 0, 0, SET_OFFSET_DIRECT
+0x00000027 : 0a300005
+            jnz         LABEL_SYNC_GETF_BY_ADDR_ENTRY, r0, 0
+0x00000028 : 80002010
+            matcl       r0, C_INIT_CTRL_GETF_BY_LUN, 0, 0, SET_OFFSET_DIRECT
+0x00000029 : 0b300005
+            jnz         LABEL_SYNC_GETF_BY_LUN_ENTRY, r0, 0
+0x0000002a : 80007010
+            matcl       r0, C_INIT_CTRL_RDPARAM, 0, 0, SET_OFFSET_DIRECT
+0x0000002b : 0c400005
+            jnz         LABEL_SYNC_RDPARAM_ENTRY, r0, 0
+0x0000002c : 8000f010
+            matcl       r0, C_INIT_CTRL_TEST, 0, 0, SET_OFFSET_DIRECT
+0x0000002d : 0c500005
+            jnz         LABEL_SYNC_MCODE_TEST_ENTRY, r0, 0
+0x0000002e : 80000010
+            LABEL_RAW_CMD_ENTRY:
+            matcl       r0, C_RAW_CTRL_CMD, 0, 0, SET_OFFSET_DIRECT
+0x0000002f : 5fd00005
+            jnz         ITFC_ISSUE_CMD, r0, 0
+0x00000030 : 80006010
+            matcl       r0, C_RAW_CTRL_DATA, 0, 0, SET_OFFSET_DIRECT
+0x00000031 : 60900005
+            jnz         ITFC_ISSUE_DATA, r0, 0
+0x00000032 : 80001010
+            matcl       r0, C_RAW_CTRL_ADDR, 0, 0, SET_OFFSET_DIRECT
+0x00000033 : 60300005
+            jnz         ITFC_ISSUE_ADDR, r0, 0
+0x00000034 : 80005010
+            matcl       r0, C_RAW_CTRL_SYNC_2_READ, 0, 0, SET_OFFSET_DIRECT
+0x00000035 : 61b00005
+            jnz         ITFC_SYNC_READ_2_BYTE, r0, 0
+0x00000036 : 80003010
+            matcl       r0, C_RAW_CTRL_SYNC_8_READ, 0, 0, SET_OFFSET_DIRECT
+0x00000037 : 62100005
+            jnz         ITFC_SYNC_READ_8_BYTE, r0, 0
+0x00000038 : 80004010
+            matcl       r0, C_RAW_CTRL_SYNC_2_WRITE, 0, 0, SET_OFFSET_DIRECT
+0x00000039 : 62700005
+            jnz         ITFC_SYNC_WRITE_2_BYTE, r0, 0
+0x0000003a : 80007010
+            matcl       r0, C_RAW_CTRL_SYNC_8_WRITE, 0, 0, SET_OFFSET_DIRECT
+0x0000003b : 62e00005
+            jnz         ITFC_SYNC_WRITE_8_BYTE, r0, 0
+0x0000003c : 80002010
+            matcl       r0, C_RAW_CTRL_ASYNC_READ, 0, 0, SET_OFFSET_DIRECT
+0x0000003d : 60f00005
+            jnz         ITFC_ASYNC_READ_BYTE, r0, 0
+0x0000003e : 80008010
+            matcl       r0, C_RAW_CTRL_ASYNC_4_READ, 0, 0, SET_OFFSET_DIRECT
+0x0000003f : 61500005
+            jnz         ITFC_ASYNC_READ_4_BYTE, r0, 0
+0x00000040 : 80009010
+            matcl       r0, C_RAW_CTRL_ASYNC_WRITE_4_BYTE, 0, 0, SET_OFFSET_DIRECT
+0x00000041 : 63b00005
+            jnz         ITFC_ASYNC_WRITE_4_BYTE, r0, 0
+0x00000042 : 00015002
+            LABEL_RST_ENTRY:
+            sets        0, 5, 1
+0x00000043 : 04280006
+            wk          I_CL_RESET, C_WK_CTRL_8, LABEL_RST_ENTRY
+0x00000044 : 04601005
+            jnz    LABEL_ASYNC_RS_71H, 0, 1
+0x00000045 : 00000000
+            nop
+0x00000046 : 00000007
+            LABEL_ASYNC_RS_71H:
+            yield
+0x00000047 : 00000018
+            offst    0, 0
+0x00000048 : 0700040b
+            setpr    4, 0, 0, 7
+0x00000049 : 04610106
+            wk          I_CL_ASYNC_RS, C_WK_CTRL_1, LABEL_ASYNC_RS_71H
+0x0000004a : 00061008
+            stacp       r0, 1, 6
+0x0000004b : 04600005
+            jnz         LABEL_ASYNC_RS_71H, r0, 0
+0x0000004c : 00005002
+            sets        0, 5, 0
+0x0000004d : 04600009
+            reti        0, 0, 0, LABEL_ASYNC_RS_71H
+0x0000004e : 00010003
+            incptr    0, 1
+0x0000004f : 0000001f
+            end
+0x00000050 : 00000000
+            nop
+0x00000051 : 00015002
+            LABEL_SYNC_HD_RST_ENTRY:
+           sets 0, 5, 1
+0x00000052 : 00000007
+           yield
+0x00000053 : 00000018
+            LABEL_SYNC_HD_RST_CHK_LUN:
+            offst    0, 0
+0x00000054 : 0000010a
+            setp    1, 0, 0
+0x00000055 : 05350806
+           wk           I_CL_SYNC_RS_78H, 5, LABEL_SYNC_HD_RST_CHK_LUN
+0x00000056 : 00061008
+           stacp        r0, 1, 6  # copy bit6 of return data and invert, 1 means not ready
+0x00000057 : 05300005
+           jnz          LABEL_SYNC_HD_RST_CHK_LUN, r0, 0
+0x00000058 : 00fd001a
+            LABEL_SYNC_HD_RST_ISSUE_CMD:
+           sbyt         0, 253    # GR[0] = 8'hFD
+0x00000059 : 0700000b
+            setpr    0, r0, 0, 7
+0x0000005a : 05801b06
+           wk           I_CL_SYNC_ISSUE_CMD, 0, LABEL_SYNC_HD_RST_ISSUE_CMD
+0x0000005b : 00000007
+            LABEL_SYNC_HD_RST_CHK_DONE:
+           yield
+0x0000005c : 00000018
+            offst    0, 0
+0x0000005d : 0700040b
+            setpr    4, 0, 0, 7
+0x0000005e : 05b50106
+           wk          I_CL_ASYNC_RS, C_WK_CTRL_5, LABEL_SYNC_HD_RST_CHK_DONE
+0x0000005f : 00061008
+           stacp       r0, 1, 6
+0x00000060 : 05b00005
+           jnz         LABEL_SYNC_HD_RST_CHK_DONE, r0, 0
+0x00000061 : 06100009
+            LABEL_SYNC_HD_RST_RETI:
+           reti        0, 0, 0, LABEL_SYNC_HD_RST_RETI
+0x00000062 : 00005002
+           sets        0, 5, 0
+0x00000063 : 00010003
+            incptr    0, 1
+0x00000064 : 0000001f
+           end
+0x00000065 : 00015002
+            LABEL_SYNC_RDID_ENTRY:
+            sets        0, 5, 1
+0x00000066 : 00000016
+            mlctl       0
+0x00000067 : 00000017
+            LABEL_SYNC_RDID_MLIDL_CHK:
+            mlidl       r0
+0x00000068 : 06a00005
+            jnz    LABEL_SYNC_RDID_MLIDL_CHK_BUSY, r0, 0
+0x00000069 : 06b01005
+            jnz    LABEL_SYNC_RDID_MLIDL_CHK_PASS, 0, 1
+0x0000006a : 00000007
+             LABEL_SYNC_RDID_MLIDL_CHK_BUSY:
+            yield
+0x0000006b : 00000018
+            LABEL_SYNC_RDID_MLIDL_CHK_PASS:
+            offst    0, 0
+0x0000006c : 07000f24
+            setpc       B15, 0, 7
+0x0000006d : 06b21306
+            wk          I_CL_SYNC_RDID, C_WK_CTRL_2, LABEL_SYNC_RDID_MLIDL_CHK_PASS
+0x0000006e : 00010103
+            incptr    1, 1
+0x0000006f : 06f00409
+            LABEL_SYNC_RDID_RETI:
+            reti        4, 0, 0, LABEL_SYNC_RDID_RETI
+0x00000070 : 00000116
+            mlctl       1
+0x00000071 : 00010003
+            incptr    0, 1
+0x00000072 : 00005002
+            sets        0, 5, 0
+0x00000073 : 0000001f
+            end
+0x00000074 : 00000000
+            nop
+0x00000075 : 00015002
+            LABEL_SYNC_SETF_BY_ADDR_ENTRY:
+            sets        0, 5, 1
+0x00000076 : 00000016
+            mlctl       0
+0x00000077 : 00000017
+            LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK:
+            mlidl       r0
+0x00000078 : 07a00005
+            jnz    LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK_BUSY, r0, 0
+0x00000079 : 07c01005
+            jnz    LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK_PASS, 0, 1
+0x0000007a : 00000007
+             LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK_BUSY:
+            yield
+0x0000007b : 07701005
+            jnz    LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK, 0, 1
+0x0000007c : 07000b24
+            LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK_PASS:
+            setpc       11, 0, 7
+0x0000007d : 0f080c24
+    	    setpc       12, 8, 15
+0x0000007e : 17100d24
+ 	        setpc       13, 16, 23
+0x0000007f : 1f180e24
+            setpc       14, 24, 31
+0x00000080 : 27200f24
+            setpc       15, 32, 39
+0x00000081 : 07c20506
+            wk          I_CL_SETF_BY_ADDR, 2, LABEL_SYNC_SETF_BY_ADDR_MLIDL_CHK_PASS
+0x00000082 : 08250406
+            LABEL_SYNC_SETF_BY_ADDR_WAIT_TFEAT:
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_SYNC_SETF_BY_ADDR_WAIT_TFEAT
+0x00000083 : 00061008
+            stacp    r0, 1, 6
+0x00000084 : 08200005
+            jnz    LABEL_SYNC_SETF_BY_ADDR_WAIT_TFEAT, r0, 0
+0x00000085 : 08500009
+            LABEL_SYNC_SETF_BY_ADDR_RETI:
+	        reti        0, 0, 0, LABEL_SYNC_SETF_BY_ADDR_RETI
+0x00000086 : 00000116
+            mlctl       1
+0x00000087 : 00005002
+            sets        0, 5, 0
+0x00000088 : 00010003
+            incptr    0, 1
+0x00000089 : 0000001f
+            end
+0x0000008a : 00015002
+            LABEL_SYNC_SETF_BY_LUN_ENTRY:
+            sets        0, 5, 1
+0x0000008b : 00000016
+            mlctl       0
+0x0000008c : 00000017
+            LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK:
+            mlidl       r0
+0x0000008d : 08f00005
+            jnz    LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK_BUSY, r0, 0
+0x0000008e : 09101005
+            jnz    LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK_PASS, 0, 1
+0x0000008f : 00000007
+            LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK_BUSY:
+            yield
+0x00000090 : 08c01005
+            jnz    LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK, 0, 1
+0x00000091 : 00000018
+            LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK_PASS:
+            offst    0, 0
+0x00000092 : 2720040b
+            setpr    4, 0, 32, 39
+0x00000093 : 2f280b24
+            setpc       11, 40, 47    ## copy FA to itfc_param byte 5
+0x00000094 : 07000c24
+    	    setpc       12, 0, 7
+0x00000095 : 0f080d24
+    	    setpc       13, 8, 15
+0x00000096 : 17100e24
+ 	        setpc       14, 16, 23
+0x00000097 : 1f180f24
+            setpc       15, 24, 31
+0x00000098 : 09120f06
+            wk          I_CL_SETF_BY_LUN, 2, LABEL_SYNC_SETF_BY_LUN_MLIDL_CHK_PASS
+0x00000099 : 00000018
+            LABEL_SYNC_SETF_BY_LUN_WAIT_TFEAT:
+            offst    0, 0
+0x0000009a : 0000010a
+            setp    1, 0, 0
+0x0000009b : 09950806
+            wk          I_CL_SYNC_RS_78H, C_WK_CTRL_5, LABEL_SYNC_SETF_BY_LUN_WAIT_TFEAT
+0x0000009c : 00061008
+            stacp    r0, 1, 6
+0x0000009d : 09900005
+            jnz    LABEL_SYNC_SETF_BY_LUN_WAIT_TFEAT, r0, 0
+0x0000009e : 09e00009
+            LABEL_SYNC_SETF_BY_LUN_RETI:
+	        reti        0, 0, 0, LABEL_SYNC_SETF_BY_LUN_RETI
+0x0000009f : 00000116
+            mlctl       1
+0x000000a0 : 00005002
+            sets        0, 5, 0
+0x000000a1 : 00010003
+            incptr    0, 1
+0x000000a2 : 0000001f
+            end
+0x000000a3 : 00015002
+            LABEL_SYNC_GETF_BY_ADDR_ENTRY:
+            sets        0, 5, 1
+0x000000a4 : 00000016
+            mlctl       0
+0x000000a5 : 00000017
+            LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK:
+            mlidl       r0
+0x000000a6 : 0a800005
+            jnz    LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK_BUSY, r0, 0
+0x000000a7 : 0aa01005
+            jnz    LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK_PASS, 0, 1
+0x000000a8 : 00000007
+             LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK_BUSY:
+            yield
+0x000000a9 : 0a501005
+            jnz    LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK, 0, 1
+0x000000aa : 00000018
+            LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK_PASS:
+            offst    0, 0
+0x000000ab : 07000b24
+            setpc       11, 0, 7   ## copy FA to itfc_param byte 0
+0x000000ac : 0aa20706
+            wk          I_CL_GETF_BY_ADDR, C_WK_CTRL_2, LABEL_SYNC_GETF_BY_ADDR_MLIDL_CHK_PASS
+0x000000ad : 00010103
+            incptr    1, 1
+0x000000ae : 0ae00409
+            LABEL_SYNC_GETF_BY_ADDR_RETI:
+            reti        4, 0, 0, LABEL_SYNC_GETF_BY_ADDR_RETI
+0x000000af : 00000116
+            mlctl       1
+0x000000b0 : 00005002
+            sets        0, 5, 0
+0x000000b1 : 00010003
+            incptr    0, 1
+0x000000b2 : 0000001f
+            end
+0x000000b3 : 00015002
+            LABEL_SYNC_GETF_BY_LUN_ENTRY:
+            sets        0, 5, 1
+0x000000b4 : 00000016
+            mlctl       0
+0x000000b5 : 00000017
+            LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK:
+            mlidl       r0
+0x000000b6 : 0b800005
+            jnz    LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK_BUSY, r0, 0
+0x000000b7 : 0ba01005
+            jnz    LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK_PASS, 0, 1
+0x000000b8 : 00000007
+            LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK_BUSY:
+            yield
+0x000000b9 : 0b501005
+            jnz    LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK, 0, 1
+0x000000ba : 00000018
+            LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK_PASS:
+            offst    0, 0
+0x000000bb : 0700040b
+            setpr    4, 0, 0, 7
+0x000000bc : 0f080b24
+            setpc       11, 8, 15   ## copy FA to itfc_param byte 1
+0x000000bd : 0ba21206
+            wk          I_CL_GETF_BY_LUN, C_WK_CTRL_2, LABEL_SYNC_GETF_BY_LUN_MLIDL_CHK_PASS
+0x000000be : 00010103
+            incptr    1, 1
+0x000000bf : 0bf00009
+            LABEL_SYNC_GETF_BY_LUN_RETI:
+	        reti        0, 0, 0, LABEL_SYNC_GETF_BY_LUN_RETI
+0x000000c0 : 00000116
+            mlctl       1
+0x000000c1 : 00005002
+            sets        0, 5, 0
+0x000000c2 : 00010003
+            incptr    0, 1
+0x000000c3 : 0000001f
+            end
+0x000000c4 : 00000000
+            LABEL_SYNC_RDPARAM_ENTRY:
+            nop
+0x000000c5 : 00015002
+            LABEL_SYNC_MCODE_TEST_ENTRY:
+            sets        0, 5, 1
+0x000000c6 : 00ff001a
+            sbyt    B0, 255
+0x000000c7 : 00ff101a
+            sbyt    B1, 255
+0x000000c8 : 00ff201a
+            sbyt    B2, 255
+0x000000c9 : 00ff301a
+            sbyt    B3, 255
+0x000000ca : 00005002
+            sets        0, 5, 0
+0x000000cb : 00010003
+            incptr    0, 1
+0x000000cc : 0000001f
+            end
+0x000000cd : 0cf20010
+            LABEL_SYNC_ERASE_XLC_ENTRY:
+            matcl    r0, C_ERASE_CTRL_TLC, 207, 0, 0
+0x000000ce : 0d100005
+            jnz    LABEL_SYNC_ERASE_TLC_ENTRY, r0, 0
+0x000000cf : 0000301a
+            sbyt    R3, 0
+0x000000d0 : 0d201005
+            jnz    LABEL_SYNC_ERASE_FUNC, 0, 1
+0x000000d1 : 0001301a
+            LABEL_SYNC_ERASE_TLC_ENTRY:
+            sbyt    R3, 1
+0x000000d2 : 00015002
+            LABEL_SYNC_ERASE_FUNC:
+            sets        0, 5, 1
+0x000000d3 : 0fc01010
+            matcl    r0, C_MP_DIS, 252, 0, 0
+0x000000d4 : 11e00005
+            jnz    LABEL_SYNC_SP1_ERASE, r0, 0
+0x000000d5 : 0000401a
+            sbyt    4, 0
+0x000000d6 : 0fc02010
+            LABEL_SYNC_MP2_ERASE:
+            matcl    r0, C_MP_FOR2, 252, 0, 0
+0x000000d7 : 0da00005
+            jnz    LABEL_SYNC_MP2_ERASE_SET, r0, 0
+0x000000d8 : 00001701
+            setb        r7, 1                           ## make GR7=1 as 4Plane flag
+0x000000d9 : 0db01005
+            jnz    LABEL_SYNC_MP2_ERASE_ENTER, 0, 1
+0x000000da : 00000701
+            LABEL_SYNC_MP2_ERASE_SET:
+            setb        r7, 0                           ## 4Plane=2*2Plane
+0x000000db : 00001011
+            LABEL_SYNC_MP2_ERASE_ENTER:
+            gclvl       r0, 1                           ## should wait 2-cmd for MP erase
+0x000000dc : 0df00005
+            jnz    LABEL_SYNC_MP2_ERASE_NEXT_CMD_CHK, r0, 0
+0x000000dd : 00000007
+            yield
+0x000000de : 0d601005
+            jnz    LABEL_SYNC_MP2_ERASE, 0, 1
+0x000000df : 0000201a
+            LABEL_SYNC_MP2_ERASE_NEXT_CMD_CHK:
+            sbyt    R2, 0
+0x000000e0 : 0002301b
+            cmbyt       r0, R3, R2                      ## op==SLC flag ?
+0x000000e1 : 0e500005
+            jnz    LABEL_SYNC_MP2_SLC_2ED_CMD_CHK, r0, 0
+0x000000e2 : 00111004
+            LABEL_SYNC_MP2_TLC_2ED_CMD_CHK:
+            matop       r0, C_ERASE, 1, 1               ## check next cmd if is TLC ERASE, ensure atomic
+0x000000e3 : 0ec00005
+            jnz    LABEL_SYNC_MP2_ERASE_FUNC, r0, 0
+0x000000e4 : 0e401005
+            LABEL_SYNC_MP2_ERASE_ERROR:
+            jnz    LABEL_SYNC_MP2_ERASE_ERROR, 0, 1
+0x000000e5 : 00111004
+            LABEL_SYNC_MP2_SLC_2ED_CMD_CHK:
+            matop       r0, C_ERASE, 1, 1               ## check next cmd if is SLC ERASE, ensure atomic
+0x000000e6 : 0e800005
+            jnz    LABEL_SYNC_MP2_SLC_ERASE_SET, r0, 0
+0x000000e7 : 0e401005
+            jnz    LABEL_SYNC_MP2_ERASE_ERROR, 0, 1
+0x000000e8 : 00da201a
+            LABEL_SYNC_MP2_SLC_ERASE_SET:
+            sbyt    B2, 218
+0x000000e9 : 0700200b
+            setpr    0, B2, 0, 7
+0x000000ea : 00081b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_0
+0x000000eb : 0ec01005
+            jnz    LABEL_SYNC_MP2_ERASE_FUNC, 0, 1
+0x000000ec : 00000018
+            LABEL_SYNC_MP2_ERASE_FUNC:
+            offst    0, 0
+0x000000ed : 0a00020b
+            setpr    2, 0, 0, 10
+0x000000ee : 160b030b
+            setpr    3, 0, 11, 22
+0x000000ef : 1917040b
+            setpr    4, 0, 23, 25
+0x000000f0 : 00010018
+            offst    1, 0
+0x000000f1 : 2a20020b
+            setpr    2, 0, 32, 42
+0x000000f2 : 362b030b
+            setpr    3, 0, 43, 54
+0x000000f3 : 3937040b
+            setpr    4, 0, 55, 57
+0x000000f4 : 0000201a
+            sbyt    R2, 0
+0x000000f5 : 0002301b
+            cmbyt       r0, R3, R2                      ## op==SLC flag ?
+0x000000f6 : 0f900005
+            jnz    LABEL_SYNC_MP2_ERASE_WK, r0, 0
+0x000000f7 : 0ecc3206
+            LABEL_SYNC_MP2_ERASE_TLC_WK:
+            wk          I_CL_MP2_ERASE, C_WK_CTRL_C, LABEL_SYNC_MP2_ERASE_FUNC
+0x000000f8 : 0fa01005
+            jnz    LABEL_SYNC_MP2_ERASE_WK_END, 0, 1
+0x000000f9 : 0ecc3206
+            LABEL_SYNC_MP2_ERASE_WK:
+            wk          I_CL_MP2_ERASE, C_WK_CTRL_C, LABEL_SYNC_MP2_ERASE_FUNC
+0x000000fa : 00000018
+            LABEL_SYNC_MP2_ERASE_WK_END:
+            offst    0, 0
+0x000000fb : 00000014
+            tmrst
+0x000000fc : 00000007
+            LABEL_SYNC_MP2_ERASE_RS_7XH_TLC_YIELD:
+            yield
+0x000000fd : 00000000
+            LABEL_SYNC_MP2_ERASE_RS_7XH_CHK:
+            nop
+0x000000fe : 00000018
+            LABEL_SYNC_MP2_ERASE_TLC_CPL_WK:
+            offst    0, 0
+0x000000ff : 0700040b
+            setpr    4, 0, 0, 7
+0x00000100 : 0000010a
+            setp        SETP_ID_NO_CA, 0, 0
+0x00000101 : 0fd50806
+            wk          I_CL_SYNC_RS_78H, C_WK_CTRL_5, LABEL_SYNC_MP2_ERASE_RS_7XH_CHK
+0x00000102 : 10301005
+            jnz    LABEL_SYNC_MP2_ERASE_XPL_WK_DONE, 0, 1
+0x00000103 : 00061008
+            LABEL_SYNC_MP2_ERASE_XPL_WK_DONE:
+            stacp       r0, 1, 6
+0x00000104 : 0fc00005
+            jnz    LABEL_SYNC_MP2_ERASE_RS_7XH_TLC_YIELD, r0, 0
+0x00000105 : 00051008
+            stacp       r0, 1, 5
+0x00000106 : 0fc00005
+            jnz    LABEL_SYNC_MP2_ERASE_RS_7XH_TLC_YIELD, r0, 0
+0x00000107 : 53440d2c
+            LABEL_RS_7XH_MP2_STATUS_CHK:
+            setcpl    13, 0, 68, 83
+0x00000108 : 00000008
+            LABEL_RS_7XH_MP2_TLC_BIT0_STATUS_CHK:
+            stacp    r0, 0, 0
+0x00000109 : 10f00005
+            jnz    LABEL_RS_7XH_MP2_TLC_BIT0_FAIL, r0, 0
+0x0000010a : 10a00009
+            LABEL_RS_7XH_MP2_TLC_BIT0_PASS:
+            reti        0, 0, 0, LABEL_RS_7XH_MP2_TLC_BIT0_PASS
+0x0000010b : 00010003
+            incptr    0, 1
+0x0000010c : 11401022
+            jne    LABEL_SYNC_MP2_ERASE_CPL_CHK_FIN, 0, 1, 0
+0x0000010d : 00010021
+            adar    0, 1
+0x0000010e : 0fd01005
+            jnz    LABEL_SYNC_MP2_ERASE_RS_7XH_CHK, 0, 1
+0x0000010f : 10f01009
+            LABEL_RS_7XH_MP2_TLC_BIT0_FAIL:
+            reti        0, 1, 0, LABEL_RS_7XH_MP2_TLC_BIT0_FAIL
+0x00000110 : 00010003
+            incptr    0, 1
+0x00000111 : 11401022
+            jne    LABEL_SYNC_MP2_ERASE_CPL_CHK_FIN, 0, 1, 0
+0x00000112 : 00010021
+            adar    0, 1
+0x00000113 : 0fd01005
+            jnz    LABEL_SYNC_MP2_ERASE_RS_7XH_CHK, 0, 1
+0x00000114 : 0000201a
+            LABEL_SYNC_MP2_ERASE_CPL_CHK_FIN:
+            sbyt    B2, 0
+0x00000115 : 0002301b
+            cmbyt       r0, R3, R2
+0x00000116 : 11800005
+            jnz    LABEL_SYNC_MP2_ERASE_CPL_CHK_SLC, r0, 0
+0x00000117 : 11b01005
+            jnz    LABEL_SYNC_MP2_ERASE_CPL_DONE, 0, 1
+0x00000118 : 00df201a
+            LABEL_SYNC_MP2_ERASE_CPL_CHK_SLC:
+            sbyt    B2, 223
+0x00000119 : 0700200b
+            setpr    0, B2, 0, 7
+0x0000011a : 00081b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_0
+0x0000011b : 0da00705
+            LABEL_SYNC_MP2_ERASE_CPL_DONE:
+            jnz    LABEL_SYNC_MP2_ERASE_SET, r7, 0
+0x0000011c : 00005002
+            sets        0, 5, 0
+0x0000011d : 0000001f
+            end  ## End operation for MP2 ERASE
+0x0000011e : 0000010a
+            LABEL_SYNC_SP1_ERASE:
+            setp        SETP_ID_NO_CA, 0, 0
+0x0000011f : 0000201a
+            sbyt    R2, 0
+0x00000120 : 0002301b
+            cmbyt       r0, R3, R2      ## op==SLC flag ?
+0x00000121 : 12400005
+            jnz    LABEL_SYNC_SP1_ERASE_SLC_WK, r0, 0
+0x00000122 : 11ec0906
+            LABEL_SYNC_SP1_ERASE_TLC_WK:
+            wk          I_CL_ERASE, C_WK_CTRL_C, LABEL_SYNC_SP1_ERASE
+0x00000123 : 12801005
+            jnz    LABEL_SYNC_SP1_ERASE_WK_END, 0, 1
+0x00000124 : 00da101a
+            LABEL_SYNC_SP1_ERASE_SLC_WK:
+            sbyt    B1, 218
+0x00000125 : 0700100b
+            setpr    0, B1, 0, 7
+0x00000126 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_NA
+0x00000127 : 11ec0906
+            wk          I_CL_ERASE, C_WK_CTRL_C, LABEL_SYNC_SP1_ERASE
+0x00000128 : 00000014
+            LABEL_SYNC_SP1_ERASE_WK_END:
+            tmrst
+0x00000129 : 00000007
+            LABEL_SYNC_RS_78H_YIELD:
+            yield
+0x0000012a : 0000010a
+            LABEL_SYNC_RS_78H_SETP:
+            setp        SETP_ID_NO_CA, 0, 0
+0x0000012b : 12a50806
+            wk          I_CL_SYNC_RS_78H, C_WK_CTRL_5, LABEL_SYNC_RS_78H_SETP
+0x0000012c : 00061008
+            stacp       r0, 1, 6
+0x0000012d : 12900005
+            jnz    LABEL_SYNC_RS_78H_YIELD, r0, 0
+0x0000012e : 00051008
+            stacp       r0, 1, 5
+0x0000012f : 12900005
+            jnz    LABEL_SYNC_RS_78H_YIELD, r0, 0
+0x00000130 : 00000108
+            stacp    r1, 0, 0
+0x00000131 : 0000201a
+            sbyt    R2, 0
+0x00000132 : 0002301b
+            cmbyt       r0, R3, R2      ## op==SLC flag ?
+0x00000133 : 13500005
+            jnz    LABEL_SYNC_ERASE_SLC_RESULT, r0, 0
+0x00000134 : 13801005
+            LABEL_SYNC_ERASE_TLC_RESULT:
+            jnz    LABEL_SYNC_ERASE_CPL_TIME, 0, 1
+0x00000135 : 00df101a
+            LABEL_SYNC_ERASE_SLC_RESULT:
+            sbyt    B1, 223
+0x00000136 : 0700100b
+            setpr    0, B1, 0, 7
+0x00000137 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_NA
+0x00000138 : 53440d2c
+            LABEL_SYNC_ERASE_CPL_TIME:
+            setcpl    13, 0, 68, 83
+0x00000139 : 13c00105
+            jnz         LABEL_SYNC_ERASE_CPL_CHK_FAIL, r1, 0
+0x0000013a : 13a00009
+            LABEL_SYNC_ERASE_CPL_CHK_OK:
+            reti        0, 0, 0, LABEL_SYNC_ERASE_CPL_CHK_OK
+0x0000013b : 13d01005
+            jnz    LABEL_SYNC_ERASE_CPL_CHK_FIN, 0, 1
+0x0000013c : 13c01009
+            LABEL_SYNC_ERASE_CPL_CHK_FAIL:
+            reti        0, 1, 0, LABEL_SYNC_ERASE_CPL_CHK_FAIL
+0x0000013d : 00010003
+            LABEL_SYNC_ERASE_CPL_CHK_FIN:
+            incptr    0, 1
+0x0000013e : 00005002
+            sets        0, 5, 0
+0x0000013f : 0000001f
+            end  ## End operation for SP1 ERASE
+0x00000140 : 00015002
+            LABEL_PROG_DUMMY_ENTRY:
+            sets        0, 5, 1
+0x00000141 : 00000901
+            setb        r9, 0
+0x00000142 : 0000201a
+            sbyt    R2, 0
+0x00000143 : 14900905
+            LABEL_PROG_DUMMY_YIELD_BUF_LOCK:
+            jnz    LABEL_PROG_DUMMY_MAIN, r9, 0
+0x00000144 : 0000000c
+            pbulc    r0, 0, 0
+0x00000145 : 0000001e
+            not         r0
+0x00000146 : 14900005
+            jnz    LABEL_PROG_DUMMY_MAIN, r0, 0
+0x00000147 : 00000007
+            yield
+0x00000148 : 14301005
+            jnz    LABEL_PROG_DUMMY_YIELD_BUF_LOCK, 0, 1
+0x00000149 : 0040000e
+            LABEL_PROG_DUMMY_MAIN:
+            cklvl    r0, 0, 64
+0x0000014a : 14d00005
+            jnz    LABEL_PROG_DUMMY_INGRESS_LOW_CHK, r0, 0
+0x0000014b : 00000007
+            yield
+0x0000014c : 14901005
+            jnz    LABEL_PROG_DUMMY_MAIN, 0, 1
+0x0000014d : 00002e2b
+            LABEL_PROG_DUMMY_INGRESS_LOW_CHK:
+            setgpo    14, R2
+0x0000014e : 0120211c
+            adbyt    1, R2, 0, R2, 1
+0x0000014f : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000150 : 00002e2b
+            setgpo    14, R2
+0x00000151 : 0120211c
+            adbyt    1, R2, 0, R2, 1
+0x00000152 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000153 : 0032000e
+            LABEL_PROG_DUMMY_CHK_LVL1_YIELD:
+            cklvl    r0, 0, level_l0
+0x00000154 : 15300005
+            jnz    LABEL_PROG_DUMMY_CHK_LVL1_YIELD, r0, 0
+0x00000155 : 15382f06
+            wk    I_CL_PROG_DUMMY, 8, LABEL_PROG_DUMMY_CHK_LVL1_YIELD
+0x00000156 : 1f40001d
+            calre    0, LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEC_2K_CHK_LVL
+0x00000157 : 15700209
+            LABEL_PROG_DUMMY_RETI:
+            reti        2, 0, 0, LABEL_PROG_DUMMY_RETI
+0x00000158 : 0014100c
+            LABEL_PROG_DUMMY_RELASE_BUF:
+            pbulc    r0, 1, 20
+0x00000159 : 00000901
+            setb        r9, 0
+0x0000015a : 00010003
+            incptr    0, 1
+0x0000015b : 00005002
+            sets        0, 5, 0
+0x0000015c : 0000001f
+            end
+0x0000015d : 0000001a
+            LABEL_PROG_NATIVE_ENTRY_1CMD_2PLANE:
+            sbyt    R0, 0
+0x0000015e : 0000301a
+            sbyt    R3, 0
+0x0000015f : 00001201
+    setb        r2, 1    ##(mark as 1cmd-2plane flag)
+0x00000160 : 0000401a
+            sbyt    4, 0
+0x00000161 : 16701005
+            jnz    LABEL_PROG_XLC_REUSE_ENTRY, 0, 1
+0x00000162 : 0000001a
+            LABEL_PROG_NATIVE_ENTRY:
+            sbyt    R0, 0
+0x00000163 : 0000101a
+            sbyt    R1, 0
+0x00000164 : 0000201a
+            sbyt    R2, 0
+0x00000165 : 0000301a
+            sbyt    R3, 0
+0x00000166 : 0000401a
+            sbyt    4, 0
+0x00000167 : 00015002
+                LABEL_PROG_XLC_REUSE_ENTRY:
+    sets        0, 5, 1
+0x00000168 : 0000000c
+                LABEL_PROG_TLC_PBUF_CHK_LCK:
+            pbulc    r0, 0, 0
+0x00000169 : 16c00005
+            jnz    LABEL_PROG_TLC_PBUF_CHK_LCK_DONE, r0, 0
+0x0000016a : 00000007
+        yield
+0x0000016b : 16801005
+            jnz    LABEL_PROG_TLC_PBUF_CHK_LCK, 0, 1
+0x0000016c : 00000f2b
+                LABEL_PROG_TLC_PBUF_CHK_LCK_DONE:
+            setgpo    15, 0
+0x0000016d : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x0000016e : 0fc01010
+                LABEL_PROG_TLC_PLANE_NUM_SET:
+            matcl    r0, C_MP_DIS, 252, 0, 0
+0x0000016f : 17300005
+            jnz    LABEL_PROG_TLC_PLANE_NUM_1, r0, 0
+0x00000170 : 0fc02010
+            matcl    r0, C_MP_FOR2, 252, 0, 0
+0x00000171 : 17500005
+            jnz    LABEL_PROG_TLC_PLANE_NUM_2, r0, 0
+0x00000172 : 17201005
+                    LABEL_PROG_TLC_PLANE_NUM_UNKOWN:
+            jnz    LABEL_PROG_TLC_PLANE_NUM_UNKOWN, 0, 1
+0x00000173 : 0000501a
+                    LABEL_PROG_TLC_PLANE_NUM_1:
+            sbyt    5, 0
+0x00000174 : 17701005
+            jnz    LABEL_PROG_TLC_PLANE_NUM_SET_END, 0, 1
+0x00000175 : 0001501a
+                    LABEL_PROG_TLC_PLANE_NUM_2:
+            sbyt    5, 1
+0x00000176 : 17701005
+            jnz    LABEL_PROG_TLC_PLANE_NUM_SET_END, 0, 1
+0x00000177 : 00000000
+                LABEL_PROG_TLC_PLANE_NUM_SET_END:
+        nop
+0x00000178 : 00000401
+                LABEL_PROG_TLC_CALL_FUNC_DATA_80:
+    setb        r4, 0    ##(1st plane for 1cmd-2plane, setting r4=0 mark for initial plane)
+0x00000179 : 00000011
+                LABEL_PROG_TLC_CALL_FUNC_CHK_CMD_AVAILBLE:
+    gclvl       r0, 0, 0  ##(check cmd level >=1)
+0x0000017a : 17910022
+            jne    LABEL_PROG_TLC_CALL_FUNC_CHK_CMD_AVAILBLE, r0, 0, 1
+0x0000017b : 1e40001d
+            calre    0, LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC
+0x0000017c : 2220001d
+            calre    0, LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_FUNC
+0x0000017d : 17f00205
+            jnz    LABEL_PROG_TLC_FOR_1CMD_2ND_PROGRAM, r2, 0
+0x0000017e : 18501005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK, 0, 1
+0x0000017f : 00005002
+                    LABEL_PROG_TLC_PRORITY_FOR_CHK_STATUS_1CMD_2PLANE_MIDDLE_CHK:
+            sets            0, 5, 0
+0x00000180 : 00010002
+            sets            0, 0, 1
+0x00000181 : 2970001d
+                    LABEL_PROG_TLC_PRORITY_FOR_CHK_STATUS_DONE_1CMD_2PLANE_MIDDLE_CHK:
+            calre    0, LABEL_PROG_TLC_CHK_STATUS_RETI_FUNC
+0x00000182 : 00001401
+        setb        r4, 1    ##(2nd plane for 1cmd-2plane, setting r4=1 mark for 2nd plane)
+0x00000183 : 1e40001d
+            calre    0, LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC
+0x00000184 : 2220001d
+            calre    0, LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_FUNC
+0x00000185 : 18d01005
+                LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE, 0, 1
+0x00000186 : 18900505
+                    LABEL_PROG_TLC_INGRESS_DATA_CACHE:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CACHE_SET_REQ_CLR, r5, 0
+0x00000187 : 18b00405
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CACHE_SET_REQ_DO, r4, 0
+0x00000188 : 18d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE, 0, 1
+0x00000189 : 00001101
+                        LABEL_PROG_TLC_INGRESS_DATA_PBUF_CACHE_SET_REQ_CLR:
+                setb        r1, 1  ##make r1=1 as not req next cmd
+0x0000018a : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x0000018b : 00000101
+                        LABEL_PROG_TLC_INGRESS_DATA_PBUF_CACHE_SET_REQ_DO:
+                setb        r1, 0  ##make r1=0 as DO req next cmd
+0x0000018c : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x0000018d : 18f10222
+                    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_UNCHACHE_V0_V1_CHK, r2, 0, 1
+0x0000018e : 19110422
+            jne    LABEL_PROG_TLC_INGRESS_DATA_UNCHACHE_FIRST_PLANE, r4, 0, 1
+0x0000018f : 19211122
+                        LABEL_PROG_TLC_INGRESS_DATA_UNCHACHE_V0_V1_CHK:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE, 1, 1, 1
+0x00000190 : 19201022
+            jne    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE, 0, 1, 0
+0x00000191 : 1a801005
+                        LABEL_PROG_TLC_INGRESS_DATA_UNCHACHE_FIRST_PLANE:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x00000192 : 19c00705
+                        LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r7, 0
+0x00000193 : 19811122
+            jne    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_SP1_CNT_CHK, 1, 1, 1
+0x00000194 : 0005201a
+                        LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_MP2_CNT_CHK:
+            sbyt    B2, 5
+0x00000195 : 0001201b
+                cmbyt       r0, B2, B1
+0x00000196 : 19c00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r0, 0
+0x00000197 : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x00000198 : 0002201a
+                        LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_SP1_CNT_CHK:
+            sbyt    B2, 2
+0x00000199 : 0001201b
+                cmbyt       r0, B2, B1
+0x0000019a : 19c00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r0, 0
+0x0000019b : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x0000019c : 0014100c
+                            LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK:
+            pbulc    r0, 1, 20
+0x0000019d : 00001101
+                    setb        r1, 1
+0x0000019e : 00000014
+                    tmrst
+0x0000019f : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x000001a0 : 00c08010
+                            LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_MLC_PAGE:
+            matcl    r0, C_UPPER_PAGE, 12, 0, 0
+0x000001a1 : 19c00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r0, 0
+0x000001a2 : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x000001a3 : 00c08010
+                            LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_TLC_PAGE:
+            matcl    r0, C_UPPER_PAGE, 12, 0, 0
+0x000001a4 : 19c00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r0, 0
+0x000001a5 : 00c00010
+            matcl    r0, C_LOWER_PAGE, 12, 0, 0
+0x000001a6 : 19c00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_UNCACHE_LAST_PLANE_OTHER_UNLOCK, r0, 0
+0x000001a7 : 1a801005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE, 0, 1
+0x000001a8 : 00000000
+                LABEL_PROG_TLC_INGRESS_DATA_PBUF_CHK_DONE:
+        nop
+0x000001a9 : 1cf00105
+                LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST:
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, r1, 0
+0x000001aa : 1cf00505
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, r5, 0
+0x000001ab : 1b300605
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE, r6, 0
+0x000001ac : 00001011
+                    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_UNCACHE:
+            gclvl           r0, 1     ##(if in this line, means mp2, and check if next cmd is avail, if not, loop)
+0x000001ad : 1ac10022
+            jne    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_UNCACHE, r0, 0, 1
+0x000001ae : 00010018
+            offst    1, 0
+0x000001af : 00000f2b
+            setgpo    15, 0
+0x000001b0 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001b1 : 00000018
+            offst    0, 0
+0x000001b2 : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001b3 : 1c511122
+                    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE:
+            jne    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_SP1, 1, 1, 1
+0x000001b4 : 1ba01022
+                        LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2:
+            jne    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_PLANE1, 0, 1, 0
+0x000001b5 : 00020018
+                            LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_PLANE0:
+            offst    2, 0
+0x000001b6 : 00000f2b
+            setgpo    15, 0
+0x000001b7 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001b8 : 00010018
+            offst    1, 0
+0x000001b9 : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001ba : 1bb00305
+                            LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_PLANE1:
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_INIT, r3, 0
+0x000001bb : 00010018
+                                LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_INIT:
+            offst    1, 0
+0x000001bc : 00000f2b
+            setgpo    15, 0
+0x000001bd : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001be : 00000018
+            offst    0, 0
+0x000001bf : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001c0 : 00030018
+                                LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_MP2_NOT_INIT:
+            offst    3, 0
+0x000001c1 : 00000f2b
+            setgpo    15, 0
+0x000001c2 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001c3 : 00020018
+            offst    2, 0
+0x000001c4 : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001c5 : 1cb00305
+                        LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_SP1:
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_SP1_INIT, r3, 0
+0x000001c6 : 00020018
+                            LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_SP1_NOT_INIT:
+            offst    2, 0
+0x000001c7 : 00000f2b
+            setgpo    15, 0
+0x000001c8 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001c9 : 00010018
+            offst    1, 0
+0x000001ca : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001cb : 00010018
+                            LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_CACHE_SP1_INIT:
+            offst    1, 0
+0x000001cc : 00000f2b
+            setgpo    15, 0
+0x000001cd : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001ce : 1cf01005
+            jnz    LABEL_PROG_TLC_NEXT_DATA_PRE_REQUEST_DONE, 0, 1
+0x000001cf : 00005002
+                LABEL_PROG_TLC_PRORITY_FOR_CHK_STATUS:
+        sets            0, 5, 0
+0x000001d0 : 00010002
+        sets            0, 0, 1
+0x000001d1 : 2970001d
+                LABEL_PROG_TLC_PRORITY_FOR_CHK_STATUS_DONE:
+            calre    0, LABEL_PROG_TLC_CHK_STATUS_RETI_FUNC
+0x000001d2 : 0110111c
+                LABEL_PROG_TLC_PLANE_NUM_INCR_CHK:
+            adbyt    1, R1, 0, R1, 1
+0x000001d3 : 1e000105
+            jnz    LABEL_PROG_TLC_DONE, r1, 0
+0x000001d4 : 1d601222
+            jne    LABEL_PROG_TLC_PLANE_NUM_INCR_BEGIN, 2, 1, 0
+0x000001d5 : 1db01005
+            jnz    LABEL_PROG_TLC_ALL_PLANE_CHK_DONE, 0, 1
+0x000001d6 : 00010021
+                    LABEL_PROG_TLC_PLANE_NUM_INCR_BEGIN:
+            adar    0, 1
+0x000001d7 : 00000002
+            sets            0, 0, 0
+0x000001d8 : 00015002
+            sets            0, 5, 1
+0x000001d9 : 0000301a
+            sbyt    R3, 0
+0x000001da : 17801005
+            jnz    LABEL_PROG_TLC_CALL_FUNC_DATA_80, 0, 1
+0x000001db : 0000401a
+                    LABEL_PROG_TLC_ALL_PLANE_CHK_DONE:
+            sbyt    4, 0
+0x000001dc : 00000002
+            sets            0, 0, 0
+0x000001dd : 00015002
+            sets            0, 5, 1
+0x000001de : 16e01005
+            jnz    LABEL_PROG_TLC_PLANE_NUM_SET, 0, 1
+0x000001df : 17801005
+                LABEL_PROG_TLC_LOOP_CHK:
+            jnz    LABEL_PROG_TLC_CALL_FUNC_DATA_80, 0, 1
+0x000001e0 : 30900705
+                LABEL_PROG_TLC_DONE:
+            jnz    LABEL_PROG_SLC_ISSUE_DF, r7, 0
+0x000001e1 : 00000002
+        sets    0, 0, 0
+0x000001e2 : 0000001f
+        end
+0x000001e3 : 00000000
+        nop
+0x000001e4 : 0028000e
+                LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC:
+            cklvl    r0, 0, tlc_prog_low_thrs
+0x000001e5 : 1e400005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC, r0, 0
+0x000001e6 : 1ea00405
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_80_WK_2ND_ADDR, r4, 0
+0x000001e7 : 0000000a
+                    LABEL_PROG_TLC_INGRESS_DATA_80_WK_1ST_ADDR:
+            setp    0, 0, 0
+0x000001e8 : 1e480a06
+            wk    I_CL_PROG, 8, LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC
+0x000001e9 : 1ed01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_ARRIVE_CHK, 0, 1
+0x000001ea : 0000040a
+                    LABEL_PROG_TLC_INGRESS_DATA_80_WK_2ND_ADDR:
+            setp            4, 0, 0
+0x000001eb : 251b0924
+            setpc           9, C_ITFC_PARAM_BLK_START, C_ITFC_PARAM_BLK_END  ## (setpc bit, l, h)
+0x000001ec : 1e480a06
+            wk    I_CL_PROG, 8, LABEL_PROG_TLC_INGRESS_DATA_80_DATA_FUNC
+0x000001ed : 0028200e
+                    LABEL_PROG_TLC_INGRESS_DATA_ARRIVE_CHK:
+            cklvl    r0, 2, level_2k_ingress_low
+0x000001ee : 1ed00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_ARRIVE_CHK, r0, 0
+0x000001ef : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FIR_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x000001f0 : 1ef00005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FIR_2K_CHK_LVL, r0, 0
+0x000001f1 : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x000001f2 : 00003e2b
+            setgpo    14, R3
+0x000001f3 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001f4 : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEC_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x000001f5 : 1f400005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEC_2K_CHK_LVL, r0, 0
+0x000001f6 : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x000001f7 : 00003e2b
+            setgpo    14, R3
+0x000001f8 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001f9 : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_THR_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x000001fa : 1f900005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_THR_2K_CHK_LVL, r0, 0
+0x000001fb : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x000001fc : 00003e2b
+            setgpo    14, R3
+0x000001fd : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x000001fe : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FOUR_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x000001ff : 1fe00005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FOUR_2K_CHK_LVL, r0, 0
+0x00000200 : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x00000201 : 00003e2b
+            setgpo    14, R3
+0x00000202 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000203 : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FIFTH_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x00000204 : 20300005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_FIFTH_2K_CHK_LVL, r0, 0
+0x00000205 : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x00000206 : 00003e2b
+            setgpo    14, R3
+0x00000207 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000208 : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SIXTH_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x00000209 : 20800005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SIXTH_2K_CHK_LVL, r0, 0
+0x0000020a : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x0000020b : 00003e2b
+            setgpo    14, R3
+0x0000020c : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x0000020d : 0100200e
+                    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_CHK_LVL:
+            cklvl    r0, 2, level_2k
+0x0000020e : 20d00005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_CHK_LVL, r0, 0
+0x0000020f : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x00000210 : 00003e2b
+            setgpo    14, R3
+0x00000211 : 21400205
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_REQ_1CMD_2PLANE_CHK, r2, 0
+0x00000212 : 0000100d
+            pbreq    C_PROG_END, 0, 0
+0x00000213 : 21801005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL, 0, 1
+0x00000214 : 21700405
+                        LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_REQ_1CMD_2PLANE_CHK:
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_REQ_END_CHK, r4, 0
+0x00000215 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000216 : 21c01005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL_REQ_NEXT, 0, 1
+0x00000217 : 0000100d
+                            LABEL_ONE_SHOT_PROG_ISSUE_CHK_SEVENTH_2K_REQ_END_CHK:
+            pbreq    C_PROG_END, 0, 0
+0x00000218 : 0000301a
+                        LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL:
+            sbyt    R3, 0
+0x00000219 : 0032200e
+            cklvl    r0, 2, level_h0
+0x0000021a : 21800005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL, r0, 0
+0x0000021b : 0000011d
+            calre    1, 0
+0x0000021c : 0100200e
+                            LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL_CHK:
+            cklvl    r0, 2, level_2k
+0x0000021d : 21c00005
+            jnz    LABEL_ONE_SHOT_PROG_ISSUE_CHK_EIGHT_2K_LOW_LVL_CHK, r0, 0
+0x0000021e : 0930311c
+            adbyt    1, R3, 0, R3, 9
+0x0000021f : 00003e2b
+            setgpo    14, R3
+0x00000220 : 0000000d
+            pbreq    C_PROG_ON, 0, 0
+0x00000221 : 0000011d
+            calre    1, 0
+0x00000222 : 27601005
+                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_FUNC:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE, 0, 1
+0x00000223 : 24f11122
+                    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_CACHE:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK, 1, 1, 1
+0x00000224 : 23600405
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_IS_HIT_BEFORE, r4, 0
+0x00000225 : 27611022
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE, 0, 1, 1
+0x00000226 : 00002011
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_NOT_HIT_BEFORE:
+                        gclvl       r0, 2 , 0
+0x00000227 : 0000001e
+                        not         r0
+0x00000228 : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000229 : 00000012
+            cpphy    0, 0
+0x0000022a : 00010018
+            offst    1, 0
+0x0000022b : 0000001e
+                        not         r0
+0x0000022c : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x0000022d : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x0000022e : 0000001e
+                        not         r0
+0x0000022f : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000230 : 00922013
+            ckphy    r0, 2, 2, 9, 0
+0x00000231 : 0000001e
+                        not         r0
+0x00000232 : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000233 : 00000018
+            offst    0, 0
+0x00000234 : 00001301
+                        setb        r3, 1
+0x00000235 : 24701005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_HIT_FINISH, 0, 1
+0x00000236 : 00003011
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_IS_HIT_BEFORE:
+                        gclvl       r0, 3 , 0
+0x00000237 : 0000001e
+                        not         r0
+0x00000238 : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000239 : 00010018
+            offst    1, 0
+0x0000023a : 00000012
+            cpphy    0, 0
+0x0000023b : 00030018
+            offst    3, 0
+0x0000023c : 0000001e
+                        not         r0
+0x0000023d : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x0000023e : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x0000023f : 0000001e
+                        not         r0
+0x00000240 : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000241 : 00912013
+            ckphy    r0, 2, 1, 9, 0
+0x00000242 : 0000001e
+                        not         r0
+0x00000243 : 24a00005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE, r0, 0
+0x00000244 : 00020018
+            offst    2, 0
+0x00000245 : 00000301
+                        setb        r3, 0
+0x00000246 : 24701005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_HIT_FINISH, 0, 1
+0x00000247 : 00001401
+                                LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_HIT_FINISH:
+                        setb        r4, 1
+0x00000248 : 0015201a
+            sbyt    R2, 21
+0x00000249 : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x0000024a : 00001501
+                                LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_MP2_CACHE_CHK_UNCACHE:
+                        setb        r5, 1
+0x0000024b : 0010201a
+            sbyt    R2, 16
+0x0000024c : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x0000024d : 00000301
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_MP2_FIR_PLANE:
+                    setb        r3, 0                ##(r3 init, only last for one page)
+0x0000024e : 27601005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE, 0, 1
+0x0000024f : 26000405
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_IS_HIT_BEFORE, r4, 0
+0x00000250 : 00001011
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_NOT_HIT_BEFORE:
+                        gclvl       r0, 1 , 0
+0x00000251 : 0000001e
+                        not         r0
+0x00000252 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000253 : 00000012
+            cpphy    0, 0
+0x00000254 : 00010018
+            offst    1, 0
+0x00000255 : 0000001e
+                        not         r0
+0x00000256 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000257 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000258 : 0000001e
+                        not         r0
+0x00000259 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x0000025a : 00912013
+            ckphy    r0, 2, 1, 9, 0
+0x0000025b : 0000001e
+                        not         r0
+0x0000025c : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x0000025d : 00000018
+            offst    0, 0
+0x0000025e : 00001301
+                        setb        r3, 1
+0x0000025f : 27001005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_HIT_FINISH, 0, 1
+0x00000260 : 00002011
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_IS_HIT_BEFORE:
+                        gclvl       r0, 2 , 0
+0x00000261 : 0000001e
+                        not         r0
+0x00000262 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000263 : 00000012
+            cpphy    0, 0
+0x00000264 : 00020018
+            offst    2, 0
+0x00000265 : 0000001e
+                        not         r0
+0x00000266 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000267 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x00000268 : 0000001e
+                        not         r0
+0x00000269 : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x0000026a : 00912013
+            ckphy    r0, 2, 1, 9, 0
+0x0000026b : 0000001e
+                        not         r0
+0x0000026c : 27300005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE, r0, 0
+0x0000026d : 00010018
+            offst    1, 0
+0x0000026e : 00000301
+                        setb        r3, 0
+0x0000026f : 27001005
+            jnz    LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_HIT_FINISH, 0, 1
+0x00000270 : 00001401
+                                LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_HIT_FINISH:
+                        setb        r4, 1
+0x00000271 : 0015201a
+            sbyt    R2, 21
+0x00000272 : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x00000273 : 00001501
+                                LABEL_RPOG_TLC_INGRESS_DATA_POSTFIX_SP1_CACHE_CHK_UNCACHE:
+                        setb        r5, 1
+0x00000274 : 0010201a
+            sbyt    R2, 16
+0x00000275 : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x00000276 : 28211122
+                    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP, 1, 1, 1
+0x00000277 : 28c11022
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP_11H, 0, 1, 1
+0x00000278 : 27a10222
+                        LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_ALL_OTHER:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_ONE_SHOT_CHK, r2, 0, 1
+0x00000279 : 28c10422
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP_11H, r4, 0, 1
+0x0000027a : 28000705
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_ONE_SHOT_CHK:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_10H, r7, 0
+0x0000027b : 0005201a
+            sbyt    R2, 5
+0x0000027c : 0002101b
+                        cmbyt       r0, R1, R2
+0x0000027d : 28000005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_10H, r0, 0
+0x0000027e : 001a201a
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_1AH:
+            sbyt    R2, 26
+0x0000027f : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x00000280 : 0010201a
+                            LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP2_10H:
+            sbyt    R2, 16
+0x00000281 : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x00000282 : 28410222
+                        LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP:
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_ONE_SHOT_CHK, r2, 0, 1
+0x00000283 : 28c10422
+            jne    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP_11H, r4, 0, 1
+0x00000284 : 28a00705
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_ONE_SHOT_CHK:
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_10H, r7, 0
+0x00000285 : 0002201a
+            sbyt    R2, 2
+0x00000286 : 0002101b
+                        cmbyt       r0, R1, R2
+0x00000287 : 28a00005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_10H, r0, 0
+0x00000288 : 001a201a
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_1AH:
+            sbyt    R2, 26
+0x00000289 : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x0000028a : 0010201a
+                                LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_SP1_10H:
+            sbyt    R2, 16
+0x0000028b : 28d01005
+            jnz    LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET, 0, 1
+0x0000028c : 0011201a
+                        LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_UNCACHE_MP_11H:
+            sbyt    R2, 17
+0x0000028d : 0700200b
+                        LABEL_PROG_TLC_INGRESS_DATA_POSTFIX_SET:
+            setpr    0, R2, 0, 7
+0x0000028e : 00083806
+            wk    I_CL_PROG_POST, 8, LABEL_0
+0x0000028f : 0000011d
+            calre    1, 0
+0x00000290 : 29400005
+                LABEL_RETURN_CPL_INCPTR_CMD_FUNC:
+            jnz    LABEL_RETURN_CPL_FAIL_INCPTR_CMD, r0, 0
+0x00000291 : 29100809
+                    LABEL_RETURN_CPL_PASS_INCPTR_CMD:
+            reti            8, 0, 0, LABEL_RETURN_CPL_PASS_INCPTR_CMD
+0x00000292 : 00010003
+            incptr    0, 1
+0x00000293 : 0000011d
+            calre    1, 0
+0x00000294 : 29401809
+                    LABEL_RETURN_CPL_FAIL_INCPTR_CMD:
+            reti            8, 1, 0, LABEL_RETURN_CPL_FAIL_INCPTR_CMD
+0x00000295 : 00010003
+            incptr    0, 1
+0x00000296 : 0000011d
+            calre    1, 0
+0x00000297 : 29a01005
+                LABEL_PROG_TLC_CHK_STATUS_RETI_FUNC:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_UNCACHE, 0, 1
+0x00000298 : 2bb00405
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_HIT, r4, 0
+0x00000299 : 2bb00505
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_HIT, r5, 0
+0x0000029a : 00003b2a
+                    LABEL_PROG_TLC_CHK_STATUS_RETI_UNCACHE:
+            ccbit       C_CMD_CTR_ATOMIC_EN_START, 0, 0     ## (cpy cmd[c_cache_en]=r[0])
+0x0000029b : 2a010022
+            jne    LABEL_PROG_TLC_CHK_STATUS_ATOMIC_CHECKED_DONE, r0, 0, 1
+0x0000029c : 00003a2a
+            ccbit       C_CMD_CTR_ATOMIC_ACTIVE_START, 0, 0     ## (cpy cmd[c_cache_active]=r[0]. or else bit[7]=1'b1 )
+0x0000029d : 2a100022
+            jne    LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF, r0, 0, 0
+0x0000029e : 2a900405
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_ON, r4, 0
+0x0000029f : 2a101005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF, 0, 1
+0x000002a0 : 2a900105
+                        LABEL_PROG_TLC_CHK_STATUS_ATOMIC_CHECKED_DONE:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_ON, r1, 0
+0x000002a1 : 0000010a
+                        LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF:
+                setp           SETP_ID_NO_CA, 0, 0
+0x000002a2 : 00010806
+                wk             I_CL_SYNC_RS_78H, C_WK_CTRL_1, LABEL_0
+0x000002a3 : 00060008
+            stacp    r0, 0, 6
+0x000002a4 : 2a600005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF_1CMD_2PLANE_CHK, r0, 0
+0x000002a5 : 2a101005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF, 0, 1
+0x000002a6 : 2b010222
+                        LABEL_PROG_TLC_CHK_STATUS_YIELD_OFF_1CMD_2PLANE_CHK:
+            jne    LABEL_PROG_TLC_CHK_STATUS_FOR_RETI, r2, 0, 1
+0x000002a7 : 2b000422
+            jne    LABEL_PROG_TLC_CHK_STATUS_FOR_RETI, r4, 0, 0
+0x000002a8 : 0000011d
+            calre    1, 0
+0x000002a9 : 0000010a
+                        LABEL_PROG_TLC_CHK_STATUS_YIELD_ON:
+                setp        SETP_ID_NO_CA, 0, 0
+0x000002aa : 2a950806
+                wk          I_CL_SYNC_RS_78H, C_WK_CTRL_5, LABEL_PROG_TLC_CHK_STATUS_YIELD_ON
+0x000002ab : 00061008
+            stacp    r0, 1, 6
+0x000002ac : 2a900005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_ON, r0, 0
+0x000002ad : 2b001005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_FOR_RETI, 0, 1
+0x000002ae : 2b901005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_FOR_SUSPEND, 0, 1
+0x000002af : 2a901005
+                            LABEL_PROG_TLC_CHK_STATUS_FOR_SUSPEND_DONE:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_YIELD_ON, 0, 1
+0x000002b0 : 53440d2c
+                        LABEL_PROG_TLC_CHK_STATUS_FOR_RETI:
+            setcpl    13, 0, 68, 83
+0x000002b1 : 00000008
+            stacp    r0, 0, 0
+0x000002b2 : 2b600005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_FAIL, r0, 0
+0x000002b3 : 2b300809
+                            LABEL_PROG_TLC_CHK_STATUS_RETI_PASS:
+                    reti        8, 0, 0, LABEL_PROG_TLC_CHK_STATUS_RETI_PASS
+0x000002b4 : 00010003
+            incptr    0, 1
+0x000002b5 : 0000011d
+            calre    1, 0
+0x000002b6 : 2b601809
+                            LABEL_PROG_TLC_CHK_STATUS_RETI_FAIL:
+                    reti        8, 1, 0, LABEL_PROG_TLC_CHK_STATUS_RETI_FAIL
+0x000002b7 : 00010003
+            incptr    0, 1
+0x000002b8 : 0000011d
+            calre    1, 0
+0x000002b9 : 00000007
+                        LABEL_PROG_TLC_CHK_STATUS_FOR_SUSPEND:
+                yield
+0x000002ba : 2af01005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_FOR_SUSPEND_DONE, 0, 1
+0x000002bb : 0000010a
+                        LABEL_PROG_TLC_CHK_STATUS_CACHE_HIT_YIELD_OFF:
+                setp        SETP_ID_NO_CA, 0, 0
+0x000002bc : 2bb10806
+            wk    I_CL_SYNC_RS_78H, 1, LABEL_PROG_TLC_CHK_STATUS_CACHE_HIT_YIELD_OFF
+0x000002bd : 00051008
+            stacp    r0, 1, 5
+0x000002be : 2bb00005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_CACHE_HIT_YIELD_OFF, r0, 0
+0x000002bf : 2f400305
+                        LABEL_PROG_TLC_CHK_STATUS_CACHE_HIT_RETI:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_INIT_CACHE_HIT, r3, 0
+0x000002c0 : 2d801122
+            jne    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_MP2, 1, 1, 0
+0x000002c1 : 2cc00505
+                            LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_SP1:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_SP1, r5, 0
+0x000002c2 : 00060008
+                                LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_SP1:
+            stacp    r0, 0, 6
+0x000002c3 : 2c600005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_SP1_RDY, r0, 0
+0x000002c4 : 00000007
+                        yield
+0x000002c5 : 2c201005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_SP1, 0, 1
+0x000002c6 : 00000018
+                                    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_SP1_RDY:
+            offst    0, 0
+0x000002c7 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002c8 : 00010008
+            stacp    r0, 0, 1
+0x000002c9 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002ca : 00010018
+            offst    1, 0
+0x000002cb : 0000011d
+            calre    1, 0
+0x000002cc : 00060008
+                                LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_SP1:
+            stacp    r0, 0, 6
+0x000002cd : 2d000005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_SP1_RDY, r0, 0
+0x000002ce : 00000007
+                        yield
+0x000002cf : 2cc01005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_SP1, 0, 1
+0x000002d0 : 00000018
+                                    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_SP1_RDY:
+            offst    0, 0
+0x000002d1 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002d2 : 00010008
+            stacp    r0, 0, 1
+0x000002d3 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002d4 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002d5 : 00000008
+            stacp    r0, 0, 0
+0x000002d6 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002d7 : 0000011d
+            calre    1, 0
+0x000002d8 : 2e900505
+                            LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_MP2:
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_MP2, r5, 0
+0x000002d9 : 00060008
+                                LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_MP2:
+            stacp    r0, 0, 6
+0x000002da : 2dd00005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_MP2_RDY, r0, 0
+0x000002db : 00000007
+                        yield
+0x000002dc : 2d901005
+            jnz    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_MP2, 0, 1
+0x000002dd : 2e001022
+                                    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_NOT_LAST_MP2_RDY:
+            jne    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_MP2_V1_CHK, 0, 1, 0
+0x000002de : 00020018
+                                    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_MP2_V0_RT:
+            offst    2, 0
+0x000002df : 0000011d
+            calre    1, 0
+0x000002e0 : 00000018
+                                    LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_MP2_V1_CHK:
+            offst    0, 0
+0x000002e1 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002e2 : 00010008
+            stacp    r0, 0, 1
+0x000002e3 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002e4 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002e5 : 00000008
+            stacp    r0, 0, 0
+0x000002e6 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002e7 : 00010018
+            offst    1, 0
+0x000002e8 : 0000011d
+            calre    1, 0
+0x000002e9 : 00000018
+                                LABEL_PROG_TLC_CHK_STATUS_RETI_CACHE_NOT_INIT_IS_LAST_MP2:
+            offst    0, 0
+0x000002ea : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002eb : 00010008
+            stacp    r0, 0, 1
+0x000002ec : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002ed : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002ee : 00000008
+            stacp    r0, 0, 0
+0x000002ef : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002f0 : 53440d2c
+            setcpl    13, 0, 68, 83
+0x000002f1 : 00000008
+            stacp    r0, 0, 0
+0x000002f2 : 2900001d
+            calre    0, LABEL_RETURN_CPL_INCPTR_CMD_FUNC
+0x000002f3 : 0000011d
+            calre    1, 0
+0x000002f4 : 2f601122
+                        LABEL_PROG_TLC_CHK_STATUS_RETI_INIT_CACHE_HIT:
+            jne    LABEL_PROG_TCL_CHK_STATUS_RETI_INIT_CACHE_HIT_MP2, 1, 1, 0
+0x000002f5 : 0000011d
+            calre    1, 0
+0x000002f6 : 00010018
+                            LABEL_PROG_TCL_CHK_STATUS_RETI_INIT_CACHE_HIT_MP2:
+            offst    1, 0
+0x000002f7 : 0000011d
+            calre    1, 0
+0x000002f8 : 00da101a
+            LABEL_PROG_SLC_ENTRY_1CMD_2PLANE:
+            sbyt    B1, 218
+0x000002f9 : 0700100b
+            setpr    0, B1, 0, 7
+0x000002fa : 00081b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_0
+0x000002fb : 0000401a
+            sbyt    4, 0
+0x000002fc : 0000001a
+            sbyt    R0, 0
+0x000002fd : 0000301a
+            sbyt    R3, 0
+0x000002fe : 00001701
+    setb        r7, 1
+0x000002ff : 00001201
+    setb        r2, 1    ##(mark as 1cmd-2plane flag)
+0x00000300 : 16701005
+            jnz    LABEL_PROG_XLC_REUSE_ENTRY, 0, 1
+0x00000301 : 0000401a
+            LABEL_PROG_SLC_ENTRY:
+            sbyt    4, 0
+0x00000302 : 0000001a
+            sbyt    R0, 0
+0x00000303 : 0000301a
+            sbyt    R3, 0
+0x00000304 : 00da201a
+            sbyt    B2, 218
+0x00000305 : 0700200b
+            setpr    0, B2, 0, 7
+0x00000306 : 00081b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_0
+0x00000307 : 00001701
+        setb        r7, 1
+0x00000308 : 16701005
+            jnz    LABEL_PROG_XLC_REUSE_ENTRY, 0, 1
+0x00000309 : 00df201a
+                    LABEL_PROG_SLC_ISSUE_DF:
+            sbyt    B2, 223
+0x0000030a : 0700200b
+            setpr    0, B2, 0, 7
+0x0000030b : 00081b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_0
+0x0000030c : 00000002
+        sets        0, 0, 0
+0x0000030d : 0000001f
+        end
+0x0000030e : 00001e01
+            LABEL_READ_TLC_ENTRY:
+            setb        r14, 1            ## GR[14]=1 : tlc 4k read
+0x0000030f : 31101005
+            jnz    LABEL_READ_4K_COMMON_ENTRY, 0, 1
+0x00000310 : 00000e01
+            LABEL_READ_SLC_ENTRY:
+            setb        r14, 0            ## GR[14]=0 : slc 4k read
+0x00000311 : 00015002
+            LABEL_READ_4K_COMMON_ENTRY:
+            sets        0, 5, 1
+0x00000312 : 00000018
+            LABEL_SYNC_SLC_TLC_SINGLE_READ_PRE:
+            offst    0, 0
+0x00000313 : 31700e05
+            jnz    LABEL_SINGLE_4K_TLC_WK_COMMON, r14, 0
+0x00000314 : 00da001a
+            sbyt        B0, 218                          ## DA cmd set
+0x00000315 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000316 : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x00000317 : 0000000a
+            LABEL_SINGLE_4K_TLC_WK_COMMON:
+            setp        SETP_ID_ALL, 0, 0
+0x00000318 : 0030001a
+            LABEL_SINGLE_4K_SLC_TLC_WK:
+            sbyt        B0, 48
+0x00000319 : 3730000b
+            setpr    0, B0, 48, 55
+0x0000031a : 31882906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_SINGLE_4K_SLC_TLC_WK
+0x0000031b : 00000014
+            tmrst
+0x0000031c : 00000007
+            LABEL_SYNC_TLC_READBACK_YIELD:
+            yield
+0x0000031d : 00000018
+            LABEL_SYNC_TLC_READBACK_MAIN:
+            offst       0, 0
+0x0000031e : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x0000031f : 31d50406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_SYNC_TLC_READBACK_MAIN
+0x00000320 : 0032100e
+            cklvl       r0, 1, level_empty
+0x00000321 : 31c00005
+            jnz         LABEL_SYNC_TLC_READBACK_YIELD, r0, 0
+0x00000322 : 001f4015
+            tmrea       r0, 500
+0x00000323 : 32600005
+            jnz    LABEL_SYNC_TLC_ISSUE_05_E0, r0, 0
+0x00000324 : 00061008
+            stacp       r0, 1, 6
+0x00000325 : 31c00005
+            jnz         LABEL_SYNC_TLC_READBACK_YIELD, r0, 0
+0x00000326 : 0000000a
+            LABEL_SYNC_TLC_ISSUE_05_E0:
+            setp        SETP_ID_ALL, 0, 0
+0x00000327 : 000a0d06
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x00000328 : 0096100e
+            LABEL_SYNC_TLC_READBACK_CPL_CHK_READY_YIELD:
+            cklvl       r0, 1, 150
+0x00000329 : 32810022
+            jne         LABEL_SYNC_TLC_READBACK_CPL_CHK_READY_YIELD, r0, 0 , 1
+0x0000032a : 00000018
+            offst       0, 0
+0x0000032b : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x0000032c : 00900103
+            incptr      1, 144
+0x0000032d : 32d80709
+            LABEL_TLC_FIRST_2K_RETI_ADDR:
+            reti        7, 0, 8, LABEL_TLC_FIRST_2K_RETI_ADDR
+0x0000032e : 010a100e
+            LABEL_SYNC_TLC_SINGLE_READ_CHK_LVL:
+            cklvl       r0, 1, 266
+0x0000032f : 32e10022
+            jne         LABEL_SYNC_TLC_SINGLE_READ_CHK_LVL, r0, 0 , 1
+0x00000330 : 00000018
+            offst       0, 0
+0x00000331 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000332 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000333 : 00900103
+            incptr      1, 144
+0x00000334 : 33400709
+            LABEL_SYNC_TLC_READBACK_RETURN_START:
+            reti        7, 0, 0, LABEL_SYNC_TLC_READBACK_RETURN_START
+0x00000335 : 00000003
+            incptr      0, 0
+0x00000336 : 33a00e05
+            jnz    LABEL_4K_TO_END, r14, 0
+0x00000337 : 00df001a
+            sbyt        B0, 223                          ## DF cmd set
+0x00000338 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000339 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x0000033a : 00005002
+            LABEL_4K_TO_END:
+            sets        0, 5, 0
+0x0000033b : 0000001f
+            end
+0x0000033c : 00001e01
+            LABEL_PAGE_READ_TLC_ENTRY:
+            setb        r14, 1            ## GR[14]=1 : tlc 4k read
+0x0000033d : 33f01005
+            jnz    LABEL_MULTI_PAGE_READ_COMMON_ENTRY, 0, 1
+0x0000033e : 00000e01
+            LABEL_PAGE_READ_SLC_ENTRY:
+            setb        r14, 0            ## GR[14]=0 : slc 4k read
+0x0000033f : 00015002
+            LABEL_MULTI_PAGE_READ_COMMON_ENTRY:
+            sets        0, 5, 1
+0x00000340 : 0fc02810
+            matcl       r8, C_MP_FOR2, 252, 0, 0
+0x00000341 : 34500805
+            jnz         LABEL_MULTI_READ_MP2_FUNC, r8, 0
+0x00000342 : 00011020
+            LABEL_MULTI_READ_MP1_FUNC:
+            sar         1, 1
+0x00000343 : 00000020
+            sar         0, 0
+0x00000344 : 34a01005
+            jnz         LABEL_MULTI_READ_MATCH_PAGE_FUNC, r0, 1
+0x00000345 : 00001011
+            LABEL_MULTI_READ_MP2_FUNC:
+            gclvl       r0, 1
+0x00000346 : 34800005
+            jnz         LABEL_MULTI_READ_MUL_CTRL, r0, 0
+0x00000347 : 0000001f
+            end
+0x00000348 : 00021020
+            LABEL_MULTI_READ_MUL_CTRL:
+            sar         1, 2
+0x00000349 : 00000020
+            sar         0, 0
+0x0000034a : 00000018
+            LABEL_MULTI_READ_MATCH_PAGE_FUNC:
+            offst    0, 0
+0x0000034b : 34d01005
+            jnz    LABEL_MULTI_READ_PAGE_ALL, 0, 1
+0x0000034c : 00010018
+            LABEL_MULTI_READ_FETCH_NEXT_CMD:
+            offst    1, 0
+0x0000034d : 00010021
+            LABEL_MULTI_READ_PAGE_ALL:
+            adar        0, 1
+0x0000034e : 36301222
+            jne         LABEL_MULTI_READ_PAGE_ALL_PL0, 2, 1, 0              ## v0 != v1 then jump    first read of multi-plane
+0x0000034f : 35921122
+            jne         LABEL_MULTI_READ_PAGE_ALL_SIN, 1, 1, 2              ## v1 != 2 then jump,    single read
+0x00000350 : 00000000
+            LABEL_MULTI_READ_PAGE_ALL_PL1:
+            nop
+0x00000351 : 00000000
+            nop
+0x00000352 : 00000000
+            nop                                                           ## add a nop for 440MT
+0x00000353 : 0030001a
+            sbyt        B0, 48
+0x00000354 : 3730000b
+            setpr    0, B0, 48, 55
+0x00000355 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000356 : 35082906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_PAGE_ALL_PL1
+0x00000357 : 00000014
+            tmrst
+0x00000358 : 36d01005
+            jnz         LABEL_MULTI_READ_PAGE_LUN0_LUN1_MATCH, r0, 1
+0x00000359 : 35d00e05
+            LABEL_MULTI_READ_PAGE_ALL_SIN:
+            jnz    LABEL_MULTI_READ_PAGE_ALL_SIN_WK_COMMON, r14, 0
+0x0000035a : 00da001a
+            sbyt    B0, 218
+0x0000035b : 0700000b
+            setpr    0, B0, 0, 7
+0x0000035c : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x0000035d : 0030001a
+            LABEL_MULTI_READ_PAGE_ALL_SIN_WK_COMMON:
+            sbyt        B0, 48
+0x0000035e : 3730000b
+            setpr    0, B0, 48, 55
+0x0000035f : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000360 : 35d82906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_PAGE_ALL_SIN_WK_COMMON
+0x00000361 : 00000014
+            tmrst
+0x00000362 : 36d01005
+            jnz         LABEL_MULTI_READ_PAGE_LUN0_LUN1_MATCH, r0, 1
+0x00000363 : 36700e05
+            LABEL_MULTI_READ_PAGE_ALL_PL0:
+            jnz    LABEL_MULTI_READ_PAGE_ALL_PL0_WK_COMMON, r14, 0
+0x00000364 : 00da001a
+            sbyt    B0, 218
+0x00000365 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000366 : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x00000367 : 0032001a
+            LABEL_MULTI_READ_PAGE_ALL_PL0_WK_COMMON:
+            sbyt        B0, 50
+0x00000368 : 3730000b
+            setpr    0, B0, 48, 55
+0x00000369 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x0000036a : 36782906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_PAGE_ALL_PL0_WK_COMMON
+0x0000036b : 00000014
+            tmrst
+0x0000036c : 37301005
+            jnz         LABEL_MULTI_READ_PAGE_NOYE_LUN0_LUN1_MATCH, r0, 1
+0x0000036d : 07f80010
+            LABEL_MULTI_READ_PAGE_LUN0_LUN1_MATCH:
+            matcl       r0, C_CACHED_EN, 127, 0, 0                        ## cache read enable
+0x0000036e : 37100005
+            jnz         LABEL_MULTI_READ_CACHE_ENTRY, r0, 0
+0x0000036f : 37921122
+            jne         LABEL_SINGLE_PAGE_READ_YIELD, 1, 1, 2              ## v1 != 2 , then jump to single page read
+0x00000370 : 37701005
+            jnz    LABEL_MUL_PLANE_PAGE_READ_YIELD, 0, 1
+0x00000371 : 47421122
+            LABEL_MULTI_READ_CACHE_ENTRY:
+            jne         LABEL_READ_SIG_CACHE_MAT, 1, 1, 2                  ## jump to single cache page read
+0x00000372 : 47f01005
+            jnz    LABEL_READ_MUL_CACHE_MAT, 0, 1
+0x00000373 : 57557f2c
+            LABEL_MULTI_READ_PAGE_NOYE_LUN0_LUN1_MATCH:
+            setcpl      15, 7, 85, 87
+0x00000374 : 25240f2c
+            setcpl      15, 0, 36, 37
+0x00000375 : 37300009
+            reti        0, 0, 0, LABEL_MULTI_READ_PAGE_NOYE_LUN0_LUN1_MATCH
+0x00000376 : 34c01005
+            jnz    LABEL_MULTI_READ_FETCH_NEXT_CMD, 0, 1
+0x00000377 : 00000c01
+            LABEL_MUL_PLANE_PAGE_READ_YIELD:
+            setb        r12, 0            ## multi-plane read , then set r12=0
+0x00000378 : 37a01005
+            jnz    LABEL_MULTI_READ_NO_CACHE_BEGIN_YIELD, 0, 1
+0x00000379 : 00001c01
+            LABEL_SINGLE_PAGE_READ_YIELD:
+            setb        r12, 1            ## single read, then set r12=1
+0x0000037a : 00000007
+            LABEL_MULTI_READ_NO_CACHE_BEGIN_YIELD:
+            yield
+0x0000037b : 00000018
+            LABEL_MULTI_READ_NO_CACHE_BEGIN:
+            offst       0, 0
+0x0000037c : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x0000037d : 37b50406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_MULTI_READ_NO_CACHE_BEGIN
+0x0000037e : 0090100e
+            cklvl       r0, 1, 144
+0x0000037f : 37a00005
+            jnz         LABEL_MULTI_READ_NO_CACHE_BEGIN_YIELD, r0, 0
+0x00000380 : 00061008
+            stacp       r0, 1, 6
+0x00000381 : 37a00005
+            jnz         LABEL_MULTI_READ_NO_CACHE_BEGIN_YIELD, r0, 0
+0x00000382 : 39a00c05
+            jnz    LABEL_SINGLE_PAGE_READ_05_E0, r12, 0
+0x00000383 : 000a0d06
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x00000384 : 5840001d
+            calre       0, LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC
+0x00000385 : 00ee100e
+            LABEL_MULTI_READ_NO_CACHE_CHK_LVL:
+            cklvl       r0, 1, 238
+0x00000386 : 38510022
+            jne         LABEL_MULTI_READ_NO_CACHE_CHK_LVL, r0, 0 , 1
+0x00000387 : 0000001a
+            sbyt        B0, 0
+0x00000388 : 06027a2a
+            ccbit       122, 2, 6
+0x00000389 : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x0000038a : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x0000038b : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x0000038c : 01003f2c
+            setcpl      15, 3, 0, 1
+0x0000038d : 00900103
+            incptr      1, 144
+0x0000038e : 38e80709
+            LABEL_MULTI_READ_NO_CACHE_FOUR4K_1ST_RETI:
+            reti        7, 0, 8, LABEL_MULTI_READ_NO_CACHE_FOUR4K_1ST_RETI
+0x0000038f : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000390 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000391 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000392 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000393 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x00000394 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000395 : 00900103
+            incptr      1, 144
+0x00000396 : 39600709
+            LABEL_MULTI_READ_NO_CACHE_FOUR4K_2ST_RETI:
+            reti        7, 0, 0, LABEL_MULTI_READ_NO_CACHE_FOUR4K_2ST_RETI
+0x00000397 : 00000003
+            incptr      0, 0
+0x00000398 : 0032100e
+            LABEL_MULTI_READ_NO_CACHE_CHK_FORTH_4K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x00000399 : 39800005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHK_FORTH_4K_BUF_EMPTY, r0, 0
+0x0000039a : 0000000a
+            LABEL_SINGLE_PAGE_READ_05_E0:
+            setp        SETP_ID_ALL, 0, 0
+0x0000039b : 000a0d06
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x0000039c : 57557f2c
+            LABEL_MULTI_READ_NO_CACHE_DUMMY_CPL_RETI_2:
+            setcpl      15, 7, 85, 87
+0x0000039d : 25240f2c
+            setcpl      15, 0, 36, 37
+0x0000039e : 39c00009
+            reti        0, 0, 0, LABEL_MULTI_READ_NO_CACHE_DUMMY_CPL_RETI_2
+0x0000039f : 5840001d
+            calre       0, LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC
+0x000003a0 : 00a7100e
+            LABEL_MULTI_READ_NO_CACHE_CHK_SEC_PL_LVL:
+            cklvl       r0, 1, 167
+0x000003a1 : 3a010022
+            jne         LABEL_MULTI_READ_NO_CACHE_CHK_SEC_PL_LVL, r0, 0 , 1
+0x000003a2 : 0000001a
+            sbyt        B0, 0
+0x000003a3 : 06027a2a
+            ccbit       122, 2, 6
+0x000003a4 : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x000003a5 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000003a6 : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x000003a7 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000003a8 : 00900103
+            incptr      1, 144
+0x000003a9 : 3a980709
+            LABEL_MULTI_READ_NO_CACHE_SEC_PL_FOUR4K_1ST_RETI:
+            reti        7, 0, 8, LABEL_MULTI_READ_NO_CACHE_SEC_PL_FOUR4K_1ST_RETI
+0x000003aa : 3ad00e05
+            jnz    LABEL_PAGE_READ_FIRST_SET_R11, r14, 0
+0x000003ab : 00000b01
+            setb        r11, 0
+0x000003ac : 3ae01005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHK_CMD_LVL, 0, 1
+0x000003ad : 00001b01
+            LABEL_PAGE_READ_FIRST_SET_R11:
+            setb        r11, 1
+0x000003ae : 00002011
+            LABEL_MULTI_READ_NO_CACHE_CHK_CMD_LVL:
+            gclvl       r0, 2
+0x000003af : 3b300005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHK_OP, r0, 0
+0x000003b0 : 00001011
+            gclvl       r0, 1
+0x000003b1 : 3b700005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHK_4K_OP, r0, 0
+0x000003b2 : 3c401005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHK258, r0, 1
+0x000003b3 : 0011b904
+            LABEL_MULTI_READ_NO_CACHE_CHK_OP:
+            matop       r9, C_16K_READ_DDR, 1, 1                        ## match tlc page read op
+0x000003b4 : 3bc00905
+            jnz         LABEL_MULTI_READ_NO_CACHE_TLC_CHK_CTRL, r9, 0
+0x000003b5 : 0011e904
+            matop       r9, C_16K_SLC_READ_DDR, 1, 1                    ## match slc page read op
+0x000003b6 : 3be00905
+            jnz         LABEL_MULTI_READ_NO_CACHE_SLC_CHK_CTRL, r9, 0
+0x000003b7 : 00114004
+            LABEL_MULTI_READ_NO_CACHE_CHK_4K_OP:
+            matop       r0, C_READ_DDR, 1, 1
+0x000003b8 : 3d500005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_TLC_PRE, r0, 0    ## match tlc 4k read, then jump to 4k read branch              NEED to mark r14 to differentiate tlc or slc
+0x000003b9 : 00119004
+            matop       r0, C_READ_SLC, 1, 1                            ## match slc 4k read, then jump to 4k read branch
+0x000003ba : 3de00005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_SLC_PRE, r0, 0
+0x000003bb : 3c201005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHK_NO_MAT_OP, r0, 1
+0x000003bc : 00001e01
+            LABEL_MULTI_READ_NO_CACHE_TLC_CHK_CTRL:
+            setb        r14, 1                                          ## r14=1 mark tlc
+0x000003bd : 3bf01005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHK_CTRL_MP, 0, 1
+0x000003be : 00000e01
+            LABEL_MULTI_READ_NO_CACHE_SLC_CHK_CTRL:
+            setb        r14, 0                                          ## r14=0 mark slc
+0x000003bf : 0fc02910
+            LABEL_MULTI_READ_NO_CACHE_CHK_CTRL_MP:
+            matcl       r9, C_MP_FOR2, 252, 0, 0
+0x000003c0 : 43300905
+            jnz         LABEL_MULTI_READ_MATCH_MULTI_PLANE, r9, 0       ## jump to multi-plane page read
+0x000003c1 : 45201005
+            jnz    LABEL_SINGLE_PAGE_READ_MATCH_SINGLE_PLANE, 0, 1
+0x000003c2 : 00000018
+            LABEL_MULTI_READ_NO_CACHE_CHK_NO_MAT_OP:
+            offst       0, 0
+0x000003c3 : 3c401005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHK258, 0, 1
+0x000003c4 : 0100100e
+            LABEL_MULTI_READ_NO_CACHE_CHK258:
+            cklvl       r0, 1, 256
+0x000003c5 : 3c410022
+            jne         LABEL_MULTI_READ_NO_CACHE_CHK258, r0, 0 , 1
+0x000003c6 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000003c7 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000003c8 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000003c9 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000003ca : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x000003cb : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000003cc : 00900103
+            incptr      1, 144
+0x000003cd : 3cd00709
+            LABEL_MULTI_READ_NO_CACHE_FOUR4K_2ST_RETI_AG:
+            reti        7, 0, 0, LABEL_MULTI_READ_NO_CACHE_FOUR4K_2ST_RETI_AG
+0x000003ce : 00000003
+            incptr      0, 0
+0x000003cf : 3d300e05
+            jnz    LABEL_MULTI_READ_NO_CACHE_END, r14, 0
+0x000003d0 : 00df001a
+            sbyt    B0, 223
+0x000003d1 : 0700000b
+            setpr    0, B0, 0, 7
+0x000003d2 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x000003d3 : 00005002
+            LABEL_MULTI_READ_NO_CACHE_END:
+            sets        0, 5, 0
+0x000003d4 : 0000001f
+            end
+0x000003d5 : 00001e01
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_TLC_PRE:
+            setb        r14, 1                                          ## r14=1 mark tlc
+0x000003d6 : 00002011
+            gclvl       r0, 2
+0x000003d7 : 3d900005
+            jnz         LABEL_MULTI_READ_NO_CACHE_TLC_4K_OP_CHK, r0, 0
+0x000003d8 : 3e601005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, 0, 1
+0x000003d9 : 9fc01010
+            LABEL_MULTI_READ_NO_CACHE_TLC_4K_OP_CHK:
+            matcl       r0, C_MP_DIS, 252, 1, 1                           ## match 4k read is single plane?
+0x000003da : 3e600005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, r0, 0
+0x000003db : 00124004
+            matop       r0, C_READ_DDR, 2, 1
+0x000003dc : 40800005
+            jnz    LABEL_MULTI_READ_NO_CACHE_SLC_TLC_MUL_4K_PB_CHK, r0, 0
+0x000003dd : 3e601005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, 0, 1
+0x000003de : 00000e01
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_SLC_PRE:
+            setb        r14, 0                                          ## r14=0 mark slc
+0x000003df : 00002011
+            gclvl       r0, 2
+0x000003e0 : 3e200005
+            jnz         LABEL_MULTI_READ_NO_CACHE_SLC_4K_OP_CHK, r0, 0
+0x000003e1 : 3e601005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, 0, 1
+0x000003e2 : 9fc01010
+            LABEL_MULTI_READ_NO_CACHE_SLC_4K_OP_CHK:
+            matcl       r0, C_MP_DIS, 252, 1, 1                           ## match 4k read is single plane?
+0x000003e3 : 3e600005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, r0, 0
+0x000003e4 : 00129004
+            matop       r0, C_READ_SLC, 2, 1
+0x000003e5 : 40800005
+            jnz    LABEL_MULTI_READ_NO_CACHE_SLC_TLC_MUL_4K_PB_CHK, r0, 0
+0x000003e6 : 00010018
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ:
+            offst    1, 0
+0x000003e7 : 3ee00e05
+            jnz    LABEL_MULTI_READ_TO_4K_TLC_WK_COMMON, r14, 0
+0x000003e8 : 3ea00b05
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_SLC, r11, 0
+0x000003e9 : 3f201005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_TLC, 0, 1
+0x000003ea : 00da001a
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_SLC:
+            sbyt    B0, 218
+0x000003eb : 0700000b
+            setpr    0, B0, 0, 7
+0x000003ec : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x000003ed : 3f201005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_TLC, 0, 1
+0x000003ee : 3f200b05
+            LABEL_MULTI_READ_TO_4K_TLC_WK_COMMON:
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_TLC, r11, 0
+0x000003ef : 00df001a
+            sbyt    B0, 223
+0x000003f0 : 0700000b
+            setpr    0, B0, 0, 7
+0x000003f1 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x000003f2 : 0000000a
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ_NEXT_IS_TLC:
+            setp        SETP_ID_ALL, 0, 0
+0x000003f3 : 0030001a
+            LABEL_MULTI_READ_TO_4K_SLC_TLC_WK:
+            sbyt        B0, 48
+0x000003f4 : 3730000b
+            setpr    0, B0, 48, 55
+0x000003f5 : 00001d01
+            setb        r13, 1                                              ## set GR[13] to 1 mark single read
+0x000003f6 : 3f382906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_TO_4K_SLC_TLC_WK
+0x000003f7 : 00000018
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_SETCPL_FOURTH:
+            offst       0, 0                                     ## reti page read cpl, store current cmd lun info, then jump to 4k yield
+0x000003f8 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000003f9 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000003fa : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000003fb : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000003fc : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x000003fd : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000003fe : 00900103
+            incptr      1, 144
+0x000003ff : 3ff00709
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_RETI_FOURTH:
+            reti        7, 0, 0, LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_RETI_FOURTH
+0x00000400 : 00000014
+            tmrst
+0x00000401 : 00000003
+            incptr      0, 0
+0x00000402 : 0000182a
+            ccbit       24, 0, 0
+0x00000403 : 40600005
+            jnz         LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_F2_IN_GRB0, r0, 0
+0x00000404 : 00f1201a
+            sbyt        B2, 241
+0x00000405 : 31c01005
+            jnz         LABEL_SYNC_TLC_READBACK_YIELD, r0, 1                           ## jump to 4k read yield
+0x00000406 : 00f2201a
+            LABEL_MULTI_READ_NO_CACHE_CHA_4K_READ_F2_IN_GRB0:
+            sbyt        B2, 242
+0x00000407 : 31c01005
+            jnz         LABEL_SYNC_TLC_READBACK_YIELD, r0, 1                           ## jump to 4k read yield
+0x00000408 : 00010018
+            LABEL_MULTI_READ_NO_CACHE_SLC_TLC_MUL_4K_PB_CHK:
+            offst       1, 0                                        ##first entry auto multi-4k read
+0x00000409 : 00110012
+            cpphy    1, 1
+0x0000040a : 02c23013
+            ckphy    r0, 3, 2, 12, 2
+0x0000040b : 3e600005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, r0, 0
+0x0000040c : 9fc00010
+            matcl       r0, C_MP_AUTO, 252, 1, SET_OFFSET_DIRECT    ## else to match auto mp enable?
+0x0000040d : 40f00005
+            jnz    LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_ENTRY, r0, 0
+0x0000040e : 3e601005
+            jnz    LABEL_MULTI_READ_NO_CACHE_CHA_4K_SINGLE_READ, 0, 1
+0x0000040f : 41600e05
+            LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_ENTRY:
+            jnz    LABEL_MULTI_PAGE_AUTO_MULTI_4K_READ_TLC_WK_COMMON, r14, 0
+0x00000410 : 41200b05
+            jnz    LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_SLC, r11, 0
+0x00000411 : 41a01005
+            jnz    LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_TLC, 0, 1
+0x00000412 : 00da001a
+            LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_SLC:
+            sbyt    B0, 218
+0x00000413 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000414 : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x00000415 : 41a01005
+            jnz    LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_TLC, 0, 1
+0x00000416 : 41a00b05
+            LABEL_MULTI_PAGE_AUTO_MULTI_4K_READ_TLC_WK_COMMON:
+            jnz    LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_TLC, r11, 0
+0x00000417 : 00df001a
+            sbyt    B0, 223
+0x00000418 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000419 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x0000041a : 0000000a
+            LABEL_MULTI_READ_NO_CACHE_AUTO_MULTI_4K_READ_NEXT_IS_TLC:
+            setp        SETP_ID_ALL, 0, 0
+0x0000041b : 0032001a
+            sbyt        B0, 50
+0x0000041c : 3730000b
+            setpr    0, B0, 48, 55
+0x0000041d : 41682906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_PAGE_AUTO_MULTI_4K_READ_TLC_WK_COMMON
+0x0000041e : 00000d01
+            setb        r13, 0                                          ## r13=0 mark multi-plane 4k read
+0x0000041f : 00000018
+            offst       0, 0                                     ## reti page read cpl, store current cmd lun info, then jump to 4k yield
+0x00000420 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000421 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000422 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000423 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000424 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x00000425 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000426 : 00900103
+            incptr      1, 144
+0x00000427 : 42700709
+            LABEL_MULTI_READ_NO_CACHE_BTW_4K_MUL_RETI_FOURTH:
+            reti        7, 0, 0, LABEL_MULTI_READ_NO_CACHE_BTW_4K_MUL_RETI_FOURTH
+0x00000428 : 00000003
+            incptr      0, 0
+0x00000429 : 00010018
+            LABEL_MULTI_PAGE_FOW_AUTO_MULTI_4K_READ_SECOND_MULTI_PLANE:
+            offst    1, 0
+0x0000042a : 0000000a
+            LABEL_MULTI_PAGE_FOW_AUTO_MULTI_4K_READ_SEC_TLC_WK_COMMON:
+            setp        SETP_ID_ALL, 0, 0
+0x0000042b : 0030001a
+            sbyt        B0, 48
+0x0000042c : 3730000b
+            setpr    0, B0, 48, 55
+0x0000042d : 42a82906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_PAGE_FOW_AUTO_MULTI_4K_READ_SEC_TLC_WK_COMMON
+0x0000042e : 00000014
+            LABEL_MULTI_PAGE_FOW_AUTO_MULTI_4K_READ_SEC_SLC_TLC_TMRST:
+            tmrst
+0x0000042f : 00000000
+            nop
+0x00000430 : 00000000
+            nop
+0x00000431 : 00000000
+            nop
+0x00000432 : 31c01005
+            jnz    LABEL_SYNC_TLC_READBACK_YIELD, 0, 1
+0x00000433 : 00000c01
+            LABEL_MULTI_READ_MATCH_MULTI_PLANE:
+            setb        r12, 0                                          ## r12=0 mark multi-plane page read
+0x00000434 : 00010018
+            offst    1, 0
+0x00000435 : 43c00e05
+            jnz    LABEL_MULTI_READ_TO_MULTI_TLC_WK_COMMON, r14, 0
+0x00000436 : 43800b05
+            jnz    LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_SLC, r11, 0
+0x00000437 : 44001005
+            jnz    LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_TLC, 0, 1
+0x00000438 : 00da001a
+            LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_SLC:
+            sbyt    B0, 218
+0x00000439 : 0700000b
+            setpr    0, B0, 0, 7
+0x0000043a : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x0000043b : 44001005
+            jnz    LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_TLC, 0, 1
+0x0000043c : 44000b05
+            LABEL_MULTI_READ_TO_MULTI_TLC_WK_COMMON:
+            jnz    LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_TLC, r11, 0
+0x0000043d : 00df001a
+            sbyt    B0, 223
+0x0000043e : 0700000b
+            setpr    0, B0, 0, 7
+0x0000043f : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x00000440 : 0000000a
+            LABEL_MULTI_READ_MATCH_MULTI_PLANE_NEXT_IS_TLC:
+            setp        SETP_ID_ALL, 0, 0
+0x00000441 : 0032001a
+            LABEL_MULTI_READ_TO_MULTI_SLC_TLC_WK:
+            sbyt        B0, 50
+0x00000442 : 3730000b
+            setpr    0, B0, 48, 55
+0x00000443 : 44182906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_TO_MULTI_SLC_TLC_WK
+0x00000444 : 00000018
+            LABEL_MULTI_READ_MUL_LOOP:
+            offst       0, 0
+0x00000445 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000446 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000447 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000448 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000449 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x0000044a : 53440d2c
+            setcpl      13, 0, 68, 83
+0x0000044b : 00900103
+            incptr      1, 144
+0x0000044c : 44c00709
+            LABEL_MULTI_READ_PL1_FORTH4K_RETI_UN_0032:
+            reti        7, 0, 0, LABEL_MULTI_READ_PL1_FORTH4K_RETI_UN_0032
+0x0000044d : 57557f2c
+            LABEL_MULTI_READ_PL0_DUMMY_RETI:
+            setcpl      15, 7, 85, 87
+0x0000044e : 25240f2c
+            setcpl      15, 0, 36, 37
+0x0000044f : 44d00009
+            reti        0, 0, 0, LABEL_MULTI_READ_PL0_DUMMY_RETI
+0x00000450 : 00000003
+            incptr      0, 0
+0x00000451 : 45e01005
+            jnz    LABEL_MULTI_READ_SECOND_MULTI_PLANE, 0, 1
+0x00000452 : 00001c01
+            LABEL_SINGLE_PAGE_READ_MATCH_SINGLE_PLANE:
+            setb        r12, 1                                          ## r12=1 mark single page read
+0x00000453 : 45a00e05
+            jnz    LABEL_MULTI_READ_TO_MULTI_SEC_OR_SINGLE_TLC_WK_COMMON, r14, 0
+0x00000454 : 45600b05
+            jnz    LABEL_SINGLE_PAGE_READ_MATCH_SINGLE_PLANE_NEXT_IS_SLC, r11, 0
+0x00000455 : 45e01005
+            jnz    LABEL_MULTI_READ_SECOND_MULTI_PLANE, 0, 1
+0x00000456 : 00da001a
+            LABEL_SINGLE_PAGE_READ_MATCH_SINGLE_PLANE_NEXT_IS_SLC:
+            sbyt    B0, 218
+0x00000457 : 0700000b
+            setpr    0, B0, 0, 7
+0x00000458 : 00081b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_NSTK_NYLD_NDS, LABEL_0
+0x00000459 : 45e01005
+            jnz    LABEL_MULTI_READ_SECOND_MULTI_PLANE, 0, 1
+0x0000045a : 45e00b05
+            LABEL_MULTI_READ_TO_MULTI_SEC_OR_SINGLE_TLC_WK_COMMON:
+            jnz    LABEL_MULTI_READ_SECOND_MULTI_PLANE, r11, 0
+0x0000045b : 00df001a
+            sbyt    B0, 223
+0x0000045c : 0700000b
+            setpr    0, B0, 0, 7
+0x0000045d : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x0000045e : 00010018
+            LABEL_MULTI_READ_SECOND_MULTI_PLANE:
+            offst    1, 0
+0x0000045f : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000460 : 0030001a
+            LABEL_MULTI_READ_TO_MULTI_SEC_OR_SINGLE_SLC_TLC_WK:
+            sbyt        B0, 48
+0x00000461 : 3730000b
+            setpr    0, B0, 48, 55
+0x00000462 : 46082906
+            LABEL_MULTI_READ_TO_MULTI_SEC_OR_SINGLE_ONLY_TLC_WK:
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_MULTI_READ_TO_MULTI_SEC_OR_SINGLE_SLC_TLC_WK
+0x00000463 : 46500c05
+            LABEL_POWER_LOSS_SIN_OR_MULTI_PAGE_END_ENTRY:
+            jnz    LABEL_SINGLE_READ_FORTH4K_RETI_UN_0030, r12, 0
+0x00000464 : 46f01005
+            jnz    LABEL_MULTI_READ_GOTO_YIELD, 0, 1
+0x00000465 : 00000018
+            LABEL_SINGLE_READ_FORTH4K_RETI_UN_0030:
+            offst       0, 0                                           ## for single read the current cpl return
+0x00000466 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000467 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000468 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000469 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x0000046a : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x0000046b : 53440d2c
+            setcpl      13, 0, 68, 83
+0x0000046c : 00900103
+            incptr      1, 144
+0x0000046d : 46d00709
+            LABEL_MULTI_READ_PL1_FORTH4K_RETI_UN_0030:
+            reti        7, 0, 0, LABEL_MULTI_READ_PL1_FORTH4K_RETI_UN_0030
+0x0000046e : 00000003
+            incptr      0, 0
+0x0000046f : 00000014
+            LABEL_MULTI_READ_GOTO_YIELD:
+            tmrst
+0x00000470 : 37900c05
+            jnz    LABEL_SINGLE_PAGE_READ_YIELD, r12, 0
+0x00000471 : 00000000
+            nop
+0x00000472 : 00000000
+            nop                                                              ## two nop add for mp read early yield issue
+0x00000473 : 37701005
+            jnz    LABEL_MUL_PLANE_PAGE_READ_YIELD, 0, 1
+0x00000474 : 00001011
+            LABEL_READ_SIG_CACHE_MAT:
+            gclvl       r0, 1
+0x00000475 : 47700005
+            jnz         LABEL_READ_SIG_CACHE_CHK_OP, r0, 0
+0x00000476 : 4b901005
+            jnz         LABEL_READ_NOR_BEGIN, r0, 1
+0x00000477 : 47b00e05
+            LABEL_READ_SIG_CACHE_CHK_OP:
+            jnz    LABEL_CACHE_READ_SINGLE_TLC_OP_CHK, r14, 0
+0x00000478 : 0011ea04
+            matop       r10, C_16K_SLC_READ_DDR, 1, 1
+0x00000479 : 49000a05
+            jnz         LABEL_READ_CACHE_PAGE_FIR_TR, r10, 0
+0x0000047a : 47d01005
+            jnz    LABEL_CACHE_SINGLE_OP_CHK_FAIL, 0, 1
+0x0000047b : 0011ba04
+            LABEL_CACHE_READ_SINGLE_TLC_OP_CHK:
+            matop       r10, C_16K_READ_DDR, 1, 1
+0x0000047c : 49000a05
+            jnz         LABEL_READ_CACHE_PAGE_FIR_TR, r10, 0
+0x0000047d : 00000018
+            LABEL_CACHE_SINGLE_OP_CHK_FAIL:
+            offst       0, 0
+0x0000047e : 4b901005
+            jnz         LABEL_READ_NOR_BEGIN, r0, 1
+0x0000047f : 00003011
+            LABEL_READ_MUL_CACHE_MAT:
+            gclvl       r0, 3
+0x00000480 : 48200005
+            jnz         LABEL_READ_MUL_CACHE_CHK_OP, r0, 0
+0x00000481 : 4b901005
+            jnz         LABEL_READ_NOR_BEGIN, r0, 1
+0x00000482 : 48600e05
+            LABEL_READ_MUL_CACHE_CHK_OP:
+            jnz    LABEL_CACHE_READ_MUL_TLC_OP_CHK, r14, 0
+0x00000483 : 0012e904
+            matop       r9, C_16K_SLC_READ_DDR, 2, 1
+0x00000484 : 48900905
+            jnz         LABEL_READ_MUL_CACHE_CHK_MUL, r9, 0
+0x00000485 : 48801005
+            jnz    LABEL_CACHE_MUL_OP_CHK_FAIL, 0, 1
+0x00000486 : 0012b904
+            LABEL_CACHE_READ_MUL_TLC_OP_CHK:
+            matop       r9, C_16K_READ_DDR, 2, 1
+0x00000487 : 48900905
+            jnz         LABEL_READ_MUL_CACHE_CHK_MUL, r9, 0
+0x00000488 : 48c01905
+            LABEL_CACHE_MUL_OP_CHK_FAIL:
+            jnz         LABEL_READ_MUL_CACHE_NO_MAT, r9, 1
+0x00000489 : 00000a01
+            LABEL_READ_MUL_CACHE_CHK_MUL:
+            setb        r10, 0
+0x0000048a : 0fc02910
+            matcl       r9, C_MP_FOR2, 252, 0, 0
+0x0000048b : 49000905
+            jnz         LABEL_READ_CACHE_PAGE_FIR_TR, r9, 0
+0x0000048c : 00000018
+            LABEL_READ_MUL_CACHE_NO_MAT:
+            offst       0, 0
+0x0000048d : 4b901005
+            jnz         LABEL_READ_NOR_BEGIN, r0, 1
+0x0000048e : 00030018
+            LABEL_READ_CACHE_FETCH_NEXT_CMD:
+           offst        3, 0
+0x0000048f : 49a01005
+           jnz          LABEL_READ_CACHE_MATCH_PAGE_FUNC, r0, 1
+0x00000490 : 00000007
+            LABEL_READ_CACHE_PAGE_FIR_TR:
+            yield
+0x00000491 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000492 : 49050406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_READ_CACHE_PAGE_FIR_TR
+0x00000493 : 00061008
+            stacp       r0, 1, 6
+0x00000494 : 49000005
+            jnz         LABEL_READ_CACHE_PAGE_FIR_TR, r0, 0
+0x00000495 : 00000020
+            LABEL_READ_SIG_MUL_CACHE_ENTRY:
+            sar         0, 0
+0x00000496 : 49900a05
+            jnz         LABEL_SET_SIG_OFFSET_1, r10, 0
+0x00000497 : 00020018
+            LABEL_SET_MUL_OFFSET_2:
+           offst        2, 0
+0x00000498 : 49a01005
+           jnz          LABEL_READ_CACHE_MATCH_PAGE_FUNC, r0, 1
+0x00000499 : 00010018
+            LABEL_SET_SIG_OFFSET_1:
+            offst       1, 0
+0x0000049a : 00010021
+            LABEL_SYNC_CACHE_TLC_WK_COMMON:
+            adar        0, 1
+0x0000049b : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x0000049c : 4af01222
+            jne         LABEL_READ_CACHE_PAGE_MSB_PL0, 2, 1, 0
+0x0000049d : 4a311022
+            jne         LABEL_READ_CACHE_PAGE_MSB_CACHE, 0, 1, 1
+0x0000049e : 0031001a
+            LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH_SINGLE:
+            sbyt        B0, 49
+0x0000049f : 3730000b
+            setpr    0, B0, 48, 55
+0x000004a0 : 49e82906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH_SINGLE
+0x000004a1 : 00000014
+            tmrst
+0x000004a2 : 55201005
+            jnz         LABEL_READ_CAH_FIR_SINGLE_BEGIN, r0, 1
+0x000004a3 : 00000000
+            LABEL_READ_CACHE_PAGE_MSB_CACHE:
+            nop
+0x000004a4 : 00000000
+            nop
+0x000004a5 : 00000000
+            nop
+0x000004a6 : 00000000
+            nop
+0x000004a7 : 00000000
+            nop
+0x000004a8 : 00000000
+            nop
+0x000004a9 : 00000000
+            nop                                                     ## add a nop for 440MT
+0x000004aa : 0031001a
+            LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH:
+            sbyt        B0, 49
+0x000004ab : 3730000b
+            setpr    0, B0, 48, 55
+0x000004ac : 4aa82906
+            LABEL_READ_CACHE_PAGE_MSB_CACHE_TLC_WK_CAH:
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH
+0x000004ad : 00000014
+            tmrst
+0x000004ae : 50401005
+            jnz         LABEL_READ_CAH_FIR_MUL_BEGIN, r0, 1
+0x000004af : 0032001a
+            LABEL_READ_CACHE_PAGE_MSB_PL0:
+            sbyt        B0, 50
+0x000004b0 : 3730000b
+            setpr    0, B0, 48, 55
+0x000004b1 : 4af82906
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_PL0
+0x000004b2 : 00000014
+            tmrst
+0x000004b3 : 48e01005
+            jnz         LABEL_READ_CACHE_FETCH_NEXT_CMD, r0, 1
+0x000004b4 : 4b700e05
+            LABEL_READ_CACHE_LAST_BEGIN:
+            jnz    LABEL_READ_CACHE_LAST_TLC_3F_ISSUE, r14, 0
+0x000004b5 : 00083606
+            wk          I_CL_SLC_READ_3F, C_WK_CTRL_8, LABEL_0
+0x000004b6 : 4b801005
+            jnz    LABEL_READ_NOR_BEGIN_YIELD, 0, 1
+0x000004b7 : 00083606
+            LABEL_READ_CACHE_LAST_TLC_3F_ISSUE:
+            wk          I_CL_READ_3F, C_WK_CTRL_8, LABEL_0
+0x000004b8 : 00000007
+            LABEL_READ_NOR_BEGIN_YIELD:
+            yield
+0x000004b9 : 00000018
+            LABEL_READ_NOR_BEGIN:
+            offst       0, 0
+0x000004ba : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x000004bb : 4b950406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_READ_NOR_BEGIN
+0x000004bc : 0032100e
+            cklvl       r0, 1, level_empty
+0x000004bd : 4b800005
+            jnz         LABEL_READ_NOR_BEGIN_YIELD, r0, 0
+0x000004be : 00061008
+            stacp       r0, 1, 6
+0x000004bf : 4b800005
+            jnz         LABEL_READ_NOR_BEGIN_YIELD, r0, 0
+0x000004c0 : 4d70001d
+            calre       0, LABEL_READ_NOR_FUNC_BEGIN
+0x000004c1 : 57557f2c
+            LABEL_DUMMY_CPL_RETI_2:
+            setcpl      15, 7, 85, 87
+0x000004c2 : 25240f2c
+            setcpl      15, 0, 36, 37
+0x000004c3 : 4c100009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_2
+0x000004c4 : 00000003
+            incptr      0, 0
+0x000004c5 : 4cc11122
+            jne         LABEL_READ_NOR_MUL_BEGIN, 1, 1, 1
+0x000004c6 : 4ca00e05
+            jnz    LABEL_TLC_CACHE_SING_END, r14, 0
+0x000004c7 : 00df001a
+            sbyt    B0, 223
+0x000004c8 : 0700000b
+            setpr    0, B0, 0, 7
+0x000004c9 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x000004ca : 00005002
+            LABEL_TLC_CACHE_SING_END:
+            sets        0, 5, 0
+0x000004cb : 0000001f
+            end
+0x000004cc : 0000000a
+            LABEL_READ_NOR_MUL_BEGIN:
+            setp        SETP_ID_ALL, 0, 0
+0x000004cd : 0032100e
+            LABEL_READ_NOR_FIRST_16K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x000004ce : 4cd00005
+            jnz         LABEL_READ_NOR_FIRST_16K_BUF_EMPTY, r0, 0
+0x000004cf : 4d70001d
+            calre       0, LABEL_READ_NOR_FUNC_BEGIN
+0x000004d0 : 00000003
+            incptr      0, 0
+0x000004d1 : 4d500e05
+            jnz    LABEL_TLC_CACHE_MUL_END, r14, 0
+0x000004d2 : 00df001a
+            sbyt    B0, 223
+0x000004d3 : 0700000b
+            setpr    0, B0, 0, 7
+0x000004d4 : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, C_WK_CTRL_STK_NYLD_NDS, LABEL_0
+0x000004d5 : 00005002
+            LABEL_TLC_CACHE_MUL_END:
+            sets        0, 5, 0
+0x000004d6 : 0000001f
+            end
+0x000004d7 : 000a0d06
+            LABEL_READ_NOR_FUNC_BEGIN:
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x000004d8 : 5840001d
+            calre       0, LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC
+0x000004d9 : 00ee100e
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_CPL_CHK_READY_YIELD:
+            cklvl       r0, 1, 238
+0x000004da : 4d910022
+            jne         LABEL_CACHE_PAGE_READBACK_FOUR4K_CPL_CHK_READY_YIELD, r0, 0 , 1
+0x000004db : 0000001a
+            sbyt        B0, 0
+0x000004dc : 06027a2a
+            ccbit       122, 2, 6
+0x000004dd : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x000004de : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000004df : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x000004e0 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000004e1 : 00900103
+            incptr      1, 144
+0x000004e2 : 4e280709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K:
+            reti        7, 0, 8, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K
+0x000004e3 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000004e4 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000004e5 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000004e6 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000004e7 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x000004e8 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000004e9 : 00900103
+            incptr      1, 144
+0x000004ea : 4ea08709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START:
+            reti        7, 8, 0, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START
+0x000004eb : 0000011d
+            calre       1, LABEL_0
+0x000004ec : 00000018
+            LABEL_READ_CACHE_MUL_LOOP:
+            offst       0, 0
+0x000004ed : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000004ee : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000004ef : 01003f2c
+            setcpl      15, 3, 0, 1
+0x000004f0 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000004f1 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x000004f2 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000004f3 : 00900103
+            incptr      1, 144
+0x000004f4 : 4f408709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_MUL_UND_0030:
+            reti        7, 8, 0, LABEL_CACHE_PAGE_READBACK_FOUR4K_MUL_UND_0030
+0x000004f5 : 57557f2c
+            LABEL_DUMMY_CPL_RETI_MUL_UND_0030:
+            setcpl      15, 7, 85, 87
+0x000004f6 : 25240f2c
+            setcpl      15, 0, 36, 37
+0x000004f7 : 4f500009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_MUL_UND_0030
+0x000004f8 : 00000003
+            incptr      0, 0
+0x000004f9 : 00003011
+            LABEL_READ_CACHE_PAGE_WAIT_MUL_CMD:
+            gclvl       r0, 3
+0x000004fa : 0000001e
+            not         r0
+0x000004fb : 4f900005
+            jnz         LABEL_READ_CACHE_PAGE_WAIT_MUL_CMD, r0, 0
+0x000004fc : 00030018
+            offst    3, 0
+0x000004fd : 0000000a
+            LABEL_READ_CACHE_PAGE_TLC_MUL_LOOP:
+            setp        SETP_ID_ALL, 0, 0
+0x000004fe : 0031001a
+            sbyt        B0, 49
+0x000004ff : 3730000b
+            setpr    0, B0, 48, 55
+0x00000500 : 50082906
+            LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH_MUL:
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_CACHE_WK_CAH_MUL
+0x00000501 : 00000014
+            tmrst
+0x00000502 : 50401005
+            jnz    LABEL_READ_CAH_FIR_MUL_BEGIN, 0, 1
+0x00000503 : 00000007
+            LABEL_READ_CAH_FIR_MUL_BEGIN_YIELD:
+            yield
+0x00000504 : 00000018
+            LABEL_READ_CAH_FIR_MUL_BEGIN:
+            offst       0, 0
+0x00000505 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000506 : 50450406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_READ_CAH_FIR_MUL_BEGIN
+0x00000507 : 0032100e
+            cklvl       r0, 1, level_empty
+0x00000508 : 50300005
+            jnz         LABEL_READ_CAH_FIR_MUL_BEGIN_YIELD, r0, 0
+0x00000509 : 00061008
+            stacp       r0, 1, 6
+0x0000050a : 50300005
+            jnz         LABEL_READ_CAH_FIR_MUL_BEGIN_YIELD, r0, 0
+0x0000050b : 4d70001d
+            calre       0, LABEL_READ_NOR_FUNC_BEGIN
+0x0000050c : 57557f2c
+            LABEL_DUMMY_CPL_RETI_0:
+            setcpl      15, 7, 85, 87
+0x0000050d : 25240f2c
+            setcpl      15, 0, 36, 37
+0x0000050e : 50c00009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_0
+0x0000050f : 00000003
+            incptr      0, 0
+0x00000510 : 00000018
+            LABEL_READ_NOR_FUNC_BEGIN_MUL:
+            offst       0, 0
+0x00000511 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000512 : 0032100e
+            LABEL_READ_CAH_FIR_16K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x00000513 : 51200005
+            jnz         LABEL_READ_CAH_FIR_16K_BUF_EMPTY, r0, 0
+0x00000514 : 000a0d06
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x00000515 : 5840001d
+            calre       0, LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC
+0x00000516 : 00c4100e
+            LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_MUL:
+            cklvl       r0, 1, 196
+0x00000517 : 51610022
+            jne         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_MUL, r0, 0 , 1
+0x00000518 : 0000001a
+            sbyt        B0, 0
+0x00000519 : 06027a2a
+            ccbit       122, 2, 6
+0x0000051a : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x0000051b : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x0000051c : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x0000051d : 01003f2c
+            setcpl      15, 3, 0, 1
+0x0000051e : 00900103
+            incptr      1, 144
+0x0000051f : 51f80709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K_MUL:
+            reti        7, 0, 8, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K_MUL
+0x00000520 : 00003011
+            LABEL_READ_CACHE_CONTI_MUL_CACHE_MAT:
+            gclvl       r0, 3
+0x00000521 : 52300005
+            jnz         LABEL_READ_CACHE_CONTI_MUL_CACHE_CHK_OP, r0, 0
+0x00000522 : 52d01005
+            jnz         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_MUL_CHK260, r0, 1
+0x00000523 : 52700e05
+            LABEL_READ_CACHE_CONTI_MUL_CACHE_CHK_OP:
+            jnz    LABEL_READ_CACHE_CONTI_MUL_TLC_CHK_OP, r14, 0
+0x00000524 : 0013e904
+            matop       r9, C_16K_SLC_READ_DDR, 3, 1
+0x00000525 : 52a00905
+            jnz         LABEL_READ_CACHE_CONTI_MUL_CACHE_CHK_MUL, r9, 0
+0x00000526 : 52c01905
+            jnz         LABEL_READ_CACHE_CONTI_MUL_CACHE_NO_MAT, r9, 1
+0x00000527 : 0013b904
+            LABEL_READ_CACHE_CONTI_MUL_TLC_CHK_OP:
+            matop       r9, C_16K_READ_DDR, 3, 1
+0x00000528 : 52a00905
+            jnz         LABEL_READ_CACHE_CONTI_MUL_CACHE_CHK_MUL, r9, 0
+0x00000529 : 52c01905
+            jnz         LABEL_READ_CACHE_CONTI_MUL_CACHE_NO_MAT, r9, 1
+0x0000052a : 0fc02910
+            LABEL_READ_CACHE_CONTI_MUL_CACHE_CHK_MUL:
+            matcl       r9, C_MP_FOR2, 252, 0, 0
+0x0000052b : 53c00905
+            jnz         LABEL_READ_CACHE_MATCH_PAGE_FUNC_MUL, r9, 0
+0x0000052c : 00000018
+            LABEL_READ_CACHE_CONTI_MUL_CACHE_NO_MAT:
+            offst       0, 0
+0x0000052d : 0100100e
+            LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_MUL_CHK260:
+            cklvl       r0, 1, 256
+0x0000052e : 52d10022
+            jne         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_MUL_CHK260, r0, 0 , 1
+0x0000052f : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000530 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000531 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000532 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000533 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x00000534 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000535 : 00900103
+            incptr      1, 144
+0x00000536 : 53608709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START_MUL:
+            reti        7, 8, 0, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START_MUL
+0x00000537 : 57557f2c
+            LABEL_DUMMY_CPL_RETI_1:
+            setcpl      15, 7, 85, 87
+0x00000538 : 25240f2c
+            setcpl      15, 0, 36, 37
+0x00000539 : 53700009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_1
+0x0000053a : 00000003
+            incptr      0, 0
+0x0000053b : 4b401005
+            jnz         LABEL_READ_CACHE_LAST_BEGIN, r0, 1
+0x0000053c : 00030018
+            LABEL_READ_CACHE_MATCH_PAGE_FUNC_MUL:
+            offst    3, 0
+0x0000053d : 0032001a
+            LABEL_READ_CACHE_MATCH_PAGE_FUNC_MUL_TLC_WK_COMMON:
+            sbyt        B0, 50
+0x0000053e : 3730000b
+            setpr    0, B0, 48, 55
+0x0000053f : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000540 : 54082906
+            LABEL_READ_CACHE_PAGE_MSB_MUL:
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_MUL
+0x00000541 : 4ec01005
+            jnz         LABEL_READ_CACHE_MUL_LOOP, r0, 1
+0x00000542 : 00000018
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RECPL_UND_0030:
+            offst       0, 0
+0x00000543 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000544 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000545 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000546 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000547 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x00000548 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000549 : 00900103
+            incptr      1, 144
+0x0000054a : 54a08709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_UND_0030:
+            reti        7, 8, 0, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_UND_0030
+0x0000054b : 00000014
+            tmrst
+0x0000054c : 57557f2c
+            LABEL_DUMMY_CPL_RETI_UND_0030:
+            setcpl      15, 7, 85, 87
+0x0000054d : 25240f2c
+            setcpl      15, 0, 36, 37
+0x0000054e : 54c00009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_UND_0030
+0x0000054f : 00000003
+            incptr      0, 0
+0x00000550 : 55201005
+            jnz         LABEL_READ_CAH_FIR_SINGLE_BEGIN, r0, 1
+0x00000551 : 00000007
+            LABEL_READ_CAH_FIR_SINGLE_BEGIN_YIELD:
+            yield
+0x00000552 : 00000018
+            LABEL_READ_CAH_FIR_SINGLE_BEGIN:
+            offst       0, 0
+0x00000553 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000554 : 55250406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_READ_CAH_FIR_SINGLE_BEGIN
+0x00000555 : 0032100e
+            cklvl       r0, 1, level_empty
+0x00000556 : 55100005
+            jnz         LABEL_READ_CAH_FIR_SINGLE_BEGIN_YIELD, r0, 0
+0x00000557 : 00061008
+            stacp       r0, 1, 6
+0x00000558 : 55100005
+            jnz         LABEL_READ_CAH_FIR_SINGLE_BEGIN_YIELD, r0, 0
+0x00000559 : 000a0d06
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x0000055a : 5840001d
+            calre       0, LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC
+0x0000055b : 00c4100e
+            LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_SINGLE:
+            cklvl       r0, 1, 196
+0x0000055c : 55b10022
+            jne         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_SINGLE, r0, 0 , 1
+0x0000055d : 0000001a
+            sbyt        B0, 0
+0x0000055e : 06027a2a
+            ccbit       122, 2, 6
+0x0000055f : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x00000560 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000561 : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x00000562 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000563 : 00900103
+            incptr      1, 144
+0x00000564 : 56480709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K_SINGLE:
+            reti        7, 0, 8, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_2K_SINGLE
+0x00000565 : 00002011
+            LABEL_READ_CACHE_CONTI_SIG_CACHE_MAT:
+            gclvl       r0, 2
+0x00000566 : 56800005
+            jnz         LABEL_READ_CACHE_CONTI_SIG_CACHE_CHK_OP, r0, 0
+0x00000567 : 56f01005
+            jnz         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_SINGLE_CHK260, r0, 1
+0x00000568 : 56c00e05
+            LABEL_READ_CACHE_CONTI_SIG_CACHE_CHK_OP:
+            jnz    LABEL_READ_CACHE_CONTI_TLC_CHK_OP, r14, 0
+0x00000569 : 0012ea04
+            matop       r10, C_16K_SLC_READ_DDR, 2, 1
+0x0000056a : 57e00a05
+            jnz         LABEL_READ_CACHE_MATCH_PAGE_FUNC_SINGLE, r10, 0
+0x0000056b : 56e01005
+            jnz    LABEL_READ_CACHE_CONTI_SLC_CHK_OP_END, 0, 1
+0x0000056c : 0012ba04
+            LABEL_READ_CACHE_CONTI_TLC_CHK_OP:
+            matop       r10, C_16K_READ_DDR, 2, 1
+0x0000056d : 57e00a05
+            jnz         LABEL_READ_CACHE_MATCH_PAGE_FUNC_SINGLE, r10, 0
+0x0000056e : 00000018
+            LABEL_READ_CACHE_CONTI_SLC_CHK_OP_END:
+            offst       0, 0
+0x0000056f : 00fe100e
+            LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_SINGLE_CHK260:
+            cklvl       r0, 1, 254
+0x00000570 : 56f10022
+            jne         LABEL_CACHE_PAGE_READBACK_CPL_FOUR4K_SINGLE_CHK260, r0, 0 , 1
+0x00000571 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x00000572 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000573 : 01003f2c
+            setcpl      15, 3, 0, 1
+0x00000574 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x00000575 : fefd3f2c
+            setcpl      15, 3, 253, 254
+0x00000576 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000577 : 00900103
+            incptr      1, 144
+0x00000578 : 57808709
+            LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START_SINGLE:
+            reti        7, 8, 0, LABEL_CACHE_PAGE_READBACK_FOUR4K_RETURN_START_SINGLE
+0x00000579 : 57557f2c
+            LABEL_DUMMY_CPL_RETI_UND_SINGLE_TRANS:
+            setcpl      15, 7, 85, 87
+0x0000057a : 25240f2c
+            setcpl      15, 0, 36, 37
+0x0000057b : 57900009
+            reti        0, 0, 0, LABEL_DUMMY_CPL_RETI_UND_SINGLE_TRANS
+0x0000057c : 00000003
+            incptr      0, 0
+0x0000057d : 4b401005
+            jnz         LABEL_READ_CACHE_LAST_BEGIN, r0, 1
+0x0000057e : 00020018
+            LABEL_READ_CACHE_MATCH_PAGE_FUNC_SINGLE:
+            offst    2, 0
+0x0000057f : 0031001a
+            LABEL_READ_CACHE_MATCH_PAGE_FUNC_SINGLE_TLC_WK_COMMON:
+            sbyt        B0, 49
+0x00000580 : 3730000b
+            setpr    0, B0, 48, 55
+0x00000581 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000582 : 58282906
+            LABEL_READ_CACHE_PAGE_MSB_SINGLE:
+            wk          I_CL_SLC_TLC_READ_COMMON, C_WK_CTRL_8, LABEL_READ_CACHE_PAGE_MSB_SINGLE
+0x00000583 : 54201005
+            jnz         LABEL_CACHE_PAGE_READBACK_FOUR4K_RECPL_UND_0030, r0, 1
+0x00000584 : 00fa100e
+            LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC:
+            cklvl       r0, 1, 250
+0x00000585 : 58410022
+            jne         LABLE_PAGE_READ_THREE_4K_CONTROL_FUNC, r0, 0 , 1
+0x00000586 : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x00000587 : 01000f2c
+            setcpl      15, 0, 0, 1
+0x00000588 : 00900103
+            incptr      1, 144
+0x00000589 : 58980709
+            LABEL_PAGE_READ_1ST_RETI_FIRST_4K:
+            reti        7, 0, 8, LABEL_PAGE_READ_1ST_RETI_FIRST_4K
+0x0000058a : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x0000058b : 01000f2c
+            setcpl      15, 0, 0, 1
+0x0000058c : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x0000058d : fefd0f2c
+            setcpl      15, 0, 253, 254
+0x0000058e : 53440d2c
+            setcpl      13, 0, 68, 83
+0x0000058f : 00900103
+            incptr      1, 144
+0x00000590 : 59000709
+            LABEL_PAGE_READ_2ST_RETI_FIRST_4K:
+            reti        7, 0, 0, LABEL_PAGE_READ_2ST_RETI_FIRST_4K
+0x00000591 : 0032100e
+            LABEL_PAGE_READ_CHK_FIRST_4K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x00000592 : 59100005
+            jnz         LABEL_PAGE_READ_CHK_FIRST_4K_BUF_EMPTY, r0, 0
+0x00000593 : 000a1606
+            wk          I_CL_4K_CONT_READ, C_WK_CTRL_A, LABEL_0
+0x00000594 : 00ec100e
+            LABEL_PAGE_READ_CHK_SECOND_4K_LEVEL:
+            cklvl       r0, 1, 236
+0x00000595 : 59410022
+            jne         LABEL_PAGE_READ_CHK_SECOND_4K_LEVEL, r0, 0 , 1
+0x00000596 : 0000001a
+            sbyt        B0, 0
+0x00000597 : 06027a2a
+            ccbit       122, 2, 6
+0x00000598 : 1f18582a
+            ccbit       88, 24, 31
+0x00000599 : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x0000059a : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x0000059b : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x0000059c : 01001f2c
+            setcpl      15, 1, 0, 1
+0x0000059d : 00900103
+            incptr      1, 144
+0x0000059e : 59e80709
+            LABEL_PAGE_READ_1ST_RETI_SECOND_4K:
+            reti        7, 0, 8, LABEL_PAGE_READ_1ST_RETI_SECOND_4K
+0x0000059f : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000005a0 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000005a1 : 01001f2c
+            setcpl      15, 1, 0, 1
+0x000005a2 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000005a3 : fefd1f2c
+            setcpl      15, 1, 253, 254
+0x000005a4 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000005a5 : 00900103
+            incptr      1, 144
+0x000005a6 : 5a600709
+            LABEL_PAGE_READ_2ST_RETI_SECOND_4K:
+            reti        7, 0, 0, LABEL_PAGE_READ_2ST_RETI_SECOND_4K
+0x000005a7 : 0032100e
+            LABEL_PAGE_READ_CHK_SECOND_4K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x000005a8 : 5a700005
+            jnz         LABEL_PAGE_READ_CHK_SECOND_4K_BUF_EMPTY, r0, 0
+0x000005a9 : 000a1606
+            wk          I_CL_4K_CONT_READ, C_WK_CTRL_A, LABEL_0
+0x000005aa : 00ee100e
+            LABEL_PAGE_READ_CHK_THIRD_4K_LEVEL:
+            cklvl       r0, 1, 238
+0x000005ab : 5aa10022
+            jne         LABEL_PAGE_READ_CHK_THIRD_4K_LEVEL, r0, 0 , 1
+0x000005ac : 0000001a
+            sbyt        B0, 0
+0x000005ad : 06027a2a
+            ccbit       122, 2, 6
+0x000005ae : 0033001c
+            adbyt       0, 0, 3, 3, 0
+0x000005af : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000005b0 : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x000005b1 : 01002f2c
+            setcpl      15, 2, 0, 1
+0x000005b2 : 00900103
+            incptr      1, 144
+0x000005b3 : 5b380709
+            LABEL_PAGE_READ_1ST_RETI_THIRD_4K:
+            reti        7, 0, 8, LABEL_PAGE_READ_1ST_RETI_THIRD_4K
+0x000005b4 : 5f583e2c
+            setcpl      14, 3, 88, 95
+0x000005b5 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x000005b6 : 01002f2c
+            setcpl      15, 2, 0, 1
+0x000005b7 : 2a27ff2c
+            setcpl      15, 15, 39, 42
+0x000005b8 : fefd2f2c
+            setcpl      15, 2, 253, 254
+0x000005b9 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x000005ba : 00900103
+            incptr      1, 144
+0x000005bb : 5bb00709
+            LABEL_PAGE_READ_2ST_RETI_THIRD_4K:
+            reti        7, 0, 0, LABEL_PAGE_READ_2ST_RETI_THIRD_4K
+0x000005bc : 0032100e
+            LABEL_PAGE_READ_CHK_THIRD_4K_BUF_EMPTY:
+            cklvl       r0, 1, level_empty
+0x000005bd : 5bc00005
+            jnz         LABEL_PAGE_READ_CHK_THIRD_4K_BUF_EMPTY, r0, 0
+0x000005be : 000a1606
+            wk          I_CL_4K_CONT_READ, C_WK_CTRL_A, LABEL_0
+0x000005bf : 0000011d
+            calre       1, LABEL_0
+0x000005c0 : 00015002
+            LABEL_RR_ENTRY:
+            sets        0, 5, 1
+0x000005c1 : 00000016
+            mlctl       0
+0x000005c2 : 00000017
+            LABEL_RR_SETF_BY_ADDR_MLIDL_CHK:
+            mlidl       r0
+0x000005c3 : 5c500005
+            jnz    LABEL_RR_SETF_BY_ADDR_MLIDL_CHK_BUSY, r0, 0
+0x000005c4 : 5c701005
+            jnz    LABEL_RR_SETF_BY_ADDR_MLIDL_CHK_PASS, 0, 1
+0x000005c5 : 00000007
+                        LABEL_RR_SETF_BY_ADDR_MLIDL_CHK_BUSY:
+                yield
+0x000005c6 : 5c200005
+            jnz    LABEL_RR_SETF_BY_ADDR_MLIDL_CHK, r0, 0
+0x000005c7 : 8fe00010
+                        LABEL_RR_SETF_BY_ADDR_MLIDL_CHK_PASS:
+            matcl       r0, C_RR_DIRECT, 254, 0, SET_OFFSET_DIRECT
+0x000005c8 : 5c900005
+            jnz    LABEL_READ_RETRY_DIRECT, r0, 0
+0x000005c9 : 00000018
+            LABEL_READ_RETRY_DIRECT:
+            offst    0, 0
+0x000005ca : 0089101a
+            sbyt    B1, 137
+0x000005cb : 0700100b
+            setpr    0, B1, 0, 7
+0x000005cc : 0f08c02a
+            ccbit       C_CMD_RETRY_DATA_START, 8, 15       ## cmd[199:192] => B1
+0x000005cd : 0f08100b
+            setpr    0, B1, 8, 15
+0x000005ce : 0000101a
+            sbyt    B1, 0
+0x000005cf : 1710100b
+            setpr    0, B1, 16, 23
+0x000005d0 : 1f18100b
+            setpr    0, B1, 24, 31
+0x000005d1 : 2720100b
+            setpr    0, B1, 32, 39
+0x000005d2 : 00000506
+            wk          I_CL_SETF_BY_ADDR, C_WK_CTRL_0, LABEL_0
+0x000005d3 : 00010406
+                        LABEL_READ_RETRY_CHK_STATUS_WAIT_IDLE:
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_1, LABEL_0
+0x000005d4 : 00061008
+            stacp    r0, 1, 6
+0x000005d5 : 5d300005
+            jnz    LABEL_READ_RETRY_CHK_STATUS_WAIT_IDLE, r0, 0
+0x000005d6 : 00000116
+            mlctl       1
+0x000005d7 : 0000000a
+            LABEL_RR_MAIN:
+            setp        SETP_ID_ALL, 0, 0
+0x000005d8 : 0030001a
+            sbyt        B0, 48          ## Byte0 == 30h
+0x000005d9 : 2f28000b
+            setpr    0, B0, 40, 47
+0x000005da : 3730000b
+            setpr       0,  r0, 48, 55
+0x000005db : 5d7c2906
+            wk          I_CL_SLC_TLC_READ_COMMON,  C_WK_CTRL_C, LABEL_RR_MAIN
+0x000005dc : 00000014
+            tmrst
+0x000005dd : 6860001d
+            calre       0, LABEL_SOFT_BIT_TLC_READBACK_MAIN
+0x000005de : 00000016
+            LABEL_CLEAR_RR_SET_FEATURE:
+            mlctl       0
+0x000005df : 00000017
+            LABEL_CLEAR_RR_SET_FEATURE_MLIDL_CHK:
+            mlidl       r0
+0x000005e0 : 5e200005
+            jnz    LABEL_CLEAR_RR_SET_FEATURE_MLIDL_BUSY, r0, 0
+0x000005e1 : 5e401005
+            jnz    LABEL_CLEAR_RR_SET_FEATURE_MLIDL_PASS, 0, 1
+0x000005e2 : 00000007
+                        LABEL_CLEAR_RR_SET_FEATURE_MLIDL_BUSY:
+                yield
+0x000005e3 : 5df01005
+            jnz    LABEL_CLEAR_RR_SET_FEATURE_MLIDL_CHK, 0, 1
+0x000005e4 : 0089101a
+                        LABEL_CLEAR_RR_SET_FEATURE_MLIDL_PASS:
+            sbyt        r1, 137
+0x000005e5 : 0700100b
+            setpr    0, B1, 0, 7
+0x000005e6 : 0000001a
+            sbyt    B0, 0
+0x000005e7 : 0f08000b
+            setpr    0, B0, 8, 15
+0x000005e8 : 1710000b
+            setpr    0, B0, 16, 23
+0x000005e9 : 1f18000b
+            setpr    0, B0, 24, 31
+0x000005ea : 2720000b
+            setpr    0, B0, 32, 39
+0x000005eb : 00000506
+            wk          I_CL_SETF_BY_ADDR, C_WK_CTRL_0, LABEL_0
+0x000005ec : 00010406
+                        LABEL_CLEAR_RR_SET_FEATURE_WAIT_IDLE:
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_1, LABEL_0
+0x000005ed : 00061008
+            stacp    r0, 1, 6
+0x000005ee : 5ec00005
+            jnz    LABEL_CLEAR_RR_SET_FEATURE_WAIT_IDLE, r0, 0
+0x000005ef : 00000116
+            LABEL_CLEAR_RR_SET_FEATURE_CHK_STATUS:
+            mlctl       1
+0x000005f0 : 00010003
+            incptr    0, 1
+0x000005f1 : 00005002
+            sets        0, 5, 0
+0x000005f2 : 0000001f
+            end
+0x000005f3 : 00000000
+            nop
+0x000005f4 : 00000007
+            LABEL_SYNC_RS_70H:
+            yield
+0x000005f5 : 00010406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_1, LABEL_0
+0x000005f6 : 00061008
+            stacp       r0, 1, 6
+0x000005f7 : 5f400005
+            jnz         LABEL_SYNC_RS_70H, r0, 0
+0x000005f8 : 00005002
+            sets        0, 5, 0
+0x000005f9 : 00000009
+            reti        0, 0, 0, LABEL_0
+0x000005fa : 00010003
+            incptr    0, 1
+0x000005fb : 0000001f
+            end
+0x000005fc : 00000000
+            nop
+0x000005fd : 07000f24
+            ITFC_ISSUE_CMD:
+            setpc       r15, 0, 7
+0x000005fe : 00001b06
+            wk          I_CL_SYNC_ISSUE_CMD, 0, LABEL_0
+0x000005ff : 00000009
+            reti        0, 0, 0, LABEL_0
+0x00000600 : 00010003
+            incptr    0, 1
+0x00000601 : 0000001f
+            end
+0x00000602 : 00000000
+            nop
+0x00000603 : 07000f24
+            ITFC_ISSUE_ADDR:
+            setpc       r15, 0, 7
+0x00000604 : 00001c06
+            wk          I_CL_SYNC_ISSUE_ADDR, 0, LABEL_0
+0x00000605 : 00000009
+            reti        0, 0, 0, LABEL_0
+0x00000606 : 00010003
+            incptr    0, 1
+0x00000607 : 0000001f
+            end
+0x00000608 : 00000000
+            nop
+0x00000609 : 07000f24
+            ITFC_ISSUE_DATA:
+            setpc       r15, 0, 7
+0x0000060a : 00002106
+            wk          I_CL_SYNC_ISSUE_DATA, 0, LABEL_0
+0x0000060b : 00000009
+            reti        0, 0, 0, LABEL_0
+0x0000060c : 00010003
+            incptr    0, 1
+0x0000060d : 0000001f
+            end
+0x0000060e : 00000000
+            nop
+0x0000060f : 00021d06
+            ITFC_ASYNC_READ_BYTE:
+            wk          I_CL_ASYNC_READ_1BYTE, 2, LABEL_0
+0x00000610 : 00010103
+            incptr    1, 1
+0x00000611 : 00000409
+            reti        4, 0, 0, LABEL_0
+0x00000612 : 00010003
+            incptr    0, 1
+0x00000613 : 0000001f
+            end
+0x00000614 : 00000000
+            nop
+0x00000615 : 00022606
+            ITFC_ASYNC_READ_4_BYTE:
+            wk          I_CL_ASYNC_READ_4BYTES, 2, LABEL_0
+0x00000616 : 00010103
+            incptr    1, 1
+0x00000617 : 00000409
+            reti        4, 0, 0, LABEL_0
+0x00000618 : 00010003
+            incptr    0, 1
+0x00000619 : 0000001f
+            end
+0x0000061a : 00000000
+            nop
+0x0000061b : 00022306
+            ITFC_SYNC_READ_2_BYTE:
+            wk          I_CL_SYNC_READ_2BYTES, 2, LABEL_0
+0x0000061c : 00010103
+            incptr    1, 1
+0x0000061d : 00000409
+            reti        4, 0, 0, LABEL_0
+0x0000061e : 00010003
+            incptr    0, 1
+0x0000061f : 0000001f
+            end
+0x00000620 : 00000000
+            nop
+0x00000621 : 00021e06
+            ITFC_SYNC_READ_8_BYTE:
+            wk          I_CL_SYNC_READ_8BYTES, 2, LABEL_0
+0x00000622 : 00010103
+            incptr    1, 1
+0x00000623 : 00000409
+            reti        4, 0, 0, LABEL_0
+0x00000624 : 00010003
+            incptr    0, 1
+0x00000625 : 0000001f
+            end
+0x00000626 : 00000000
+            nop
+0x00000627 : 07000b24
+            ITFC_SYNC_WRITE_2_BYTE:
+            setpc       r11, 0, 7
+0x00000628 : 0f080c24
+            setpc       r12, 8, 15
+0x00000629 : 00001f06
+            wk          I_CL_SYNC_WRITE_2BYTES, 0, LABEL_0
+0x0000062a : 00000009
+            reti        0, 0, 0, LABEL_0
+0x0000062b : 00010003
+            incptr    0, 1
+0x0000062c : 0000001f
+            end
+0x0000062d : 00000000
+            nop
+0x0000062e : 07000b24
+            ITFC_SYNC_WRITE_8_BYTE:
+            setpc       r11,  0,  7
+0x0000062f : 0f080c24
+            setpc       r12,  8, 15
+0x00000630 : 17100d24
+            setpc       r13, 16, 23
+0x00000631 : 1f180e24
+            setpc       r14, 24, 31
+0x00000632 : 27200f24
+            setpc       r15, 32, 39
+0x00000633 : 2f281024
+            setpc       r16, 40, 47
+0x00000634 : 37301124
+            setpc       r17, 48, 55
+0x00000635 : 3f381224
+            setpc       r18, 56, 63
+0x00000636 : 00002406
+            wk          I_CL_SYNC_WRITE_8BYTES, 0, LABEL_0
+0x00000637 : 00000009
+            reti        0, 0, 0, LABEL_0
+0x00000638 : 00010003
+            incptr    0, 1
+0x00000639 : 0000001f
+            end
+0x0000063a : 00000000
+            nop
+0x0000063b : 07000b24
+            ITFC_ASYNC_WRITE_4_BYTE:
+            setpc       r11,  0,  7
+0x0000063c : 0f080c24
+            setpc       r12,  8, 15
+0x0000063d : 17100d24
+            setpc       r13, 16, 23
+0x0000063e : 1f180e24
+            setpc       r14, 24, 31
+0x0000063f : 00002706
+            wk          I_CL_ASYNC_WRITE_4BYTES,  0, LABEL_0
+0x00000640 : 00000009
+            reti        0, 0, 0, LABEL_0
+0x00000641 : 00010003
+            incptr    0, 1
+0x00000642 : 0000001f
+            end
+0x00000643 : 00000000
+            nop
+0x00000644 : 00015002
+            LABEL_SOFT_READ_ENTRY:
+            sets            0, 5, 1
+0x00000645 : 0000101a
+            sbyt    R1, 0
+0x00000646 : 0908022a
+            LABEL_SOFT_READ_LCM_PGAE_CHK:
+            ccbit           2, 8, 9         #  GR[15:08] == cmd[2+:32]
+0x00000647 : 0000201a
+            sbyt    R2, 0
+0x00000648 : 0002101b
+            cmbyt           r0, R1, R2      #  r0=(GR1==GR2) , LSB check
+0x00000649 : 0001201a
+            sbyt    R2, 1
+0x0000064a : 00010020
+            sar    0, 1
+0x0000064b : 65600005
+            jnz             LABEL_SOFT_READ_RETRY_STEP, r0, 0
+0x0000064c : 0001201a
+            sbyt    R2, 1
+0x0000064d : 0002101b
+            cmbyt           r0, R1, R2      #  r0=(GR1==GR2) , CSB check
+0x0000064e : 0002201a
+            sbyt    R2, 2
+0x0000064f : 00020020
+            sar    0, 2
+0x00000650 : 65600005
+            jnz             LABEL_SOFT_READ_RETRY_STEP, r0, 0
+0x00000651 : 0002201a
+            sbyt    R2, 2
+0x00000652 : 0002101b
+            cmbyt           r0, R1, R2      #  r0=(GR1==GR2) , MSB check
+0x00000653 : 0003201a
+            sbyt    R2, 3
+0x00000654 : 00030020
+            sar    0, 3
+0x00000655 : 65600005
+            jnz             LABEL_SOFT_READ_RETRY_STEP, r0, 0
+0x00000656 : 00000000
+            LABEL_SOFT_READ_RETRY_STEP:
+            nop
+0x00000657 : 0001501a
+            sbyt    5, 1
+0x00000658 : 6930001d
+            calre    0, LABEL_SOFT_READ_FEATURE_SET
+0x00000659 : 0030101a
+            sbyt    R1, 48
+0x0000065a : 3730100b
+            setpr           0,  R1, 48, 55
+0x0000065b : 6f70001d
+            calre    0, LABEL_SOFT_READ_RETRY_READ_DATA
+0x0000065c : 0004501a
+            sbyt    5, 4
+0x0000065d : 6930001d
+            calre    0, LABEL_SOFT_READ_FEATURE_SET
+0x0000065e : 0002501a
+            LABEL_SOFT_READ_POS_SHIFT_STEP:
+            sbyt    5, 2
+0x0000065f : 6930001d
+            calre    0, LABEL_SOFT_READ_FEATURE_SET
+0x00000660 : 0000000a
+            LABEL_SOFT_READ_POS_SHIFT_READ:
+            setp        SETP_ID_ALL, 0, 0
+0x00000661 : 2f28200b
+            setpr           0,  R2, 40, 47
+0x00000662 : 0030101a
+            sbyt    R1, 48
+0x00000663 : 3730100b
+            setpr           0,  R1, 48, 55
+0x00000664 : 66043506
+            wk              I_CL_SOFT_RR_POS, C_WK_CTRL_4, LABEL_SOFT_READ_POS_SHIFT_READ
+0x00000665 : 67e0001d
+            calre    0, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x00000666 : 0003501a
+            LABEL_SOFT_READ_NEG_SHIFT_STEP:
+            sbyt    5, 3
+0x00000667 : 6930001d
+            calre    0, LABEL_SOFT_READ_FEATURE_SET
+0x00000668 : 0000000a
+            LABEL_SOFT_READ_NEG_SHIFT_READ:
+            setp        SETP_ID_ALL, 0, 0
+0x00000669 : 2f28200b
+            setpr           0,  R2, 40, 47
+0x0000066a : 003c101a
+            sbyt    R1, 60
+0x0000066b : 3730100b
+            setpr           0,  R1, 48, 55
+0x0000066c : 6f743406
+            wk              I_CL_SOFT_RR_NEG, C_WK_CTRL_4, LABEL_SOFT_READ_RETRY_READ_DATA
+0x0000066d : 67e0001d
+            calre    0, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x0000066e : 00cb301a
+            LABEL_SOFT_READ_TLC_XNOR:
+            sbyt    R3, 203
+0x0000066f : 0700300b
+            setpr    0, R3, 0, 7
+0x00000670 : 66e81b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_SOFT_READ_TLC_XNOR
+0x00000671 : 67e0001d
+            calre    0, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x00000672 : 003f301a
+            sbyt    R3, 63
+0x00000673 : 0700300b
+            setpr    0, R3, 0, 7
+0x00000674 : 66e81b06
+            wk    I_CL_SYNC_ISSUE_CMD, 8, LABEL_SOFT_READ_TLC_XNOR
+0x00000675 : 6860001d
+            calre    0, LABEL_SOFT_BIT_TLC_READBACK_MAIN
+0x00000676 : 0004501a
+            sbyt    5, 4
+0x00000677 : 6930001d
+            calre    0, LABEL_SOFT_READ_FEATURE_SET
+0x00000678 : 00000003
+            LABEL_SOFT_READ_FINISH:
+           incptr           0, 0
+0x00000679 : 00000020
+            sar    0, 0
+0x0000067a : 00001020
+            sar    1, 0
+0x0000067b : 00005002
+           sets             0, 5, 0
+0x0000067c : 0000001f
+           end
+0x0000067d : 00000007
+            LABEL_SOFT_BIT_TLC_CHK_78H_YIELD:
+            yield
+0x0000067e : 0000000a
+            LABEL_SOFT_BIT_TLC_CHK_78H_MAIN:
+            setp        SETP_ID_ALL, 0, 0
+0x0000067f : 67e50406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x00000680 : 00061008
+            stacp       r0, 1, 6
+0x00000681 : 67d00005
+            jnz         LABEL_SOFT_BIT_TLC_CHK_78H_YIELD, r0, 0
+0x00000682 : 00051008
+            stacp       r0, 1, 5            ## this bit check flash array status
+0x00000683 : 67d00005
+            jnz         LABEL_SOFT_BIT_TLC_CHK_78H_YIELD, r0, 0
+0x00000684 : 0000011d
+            calre    1, 0
+0x00000685 : 00000007
+            LABEL_SOFT_BIT_TLC_READBACK_YIELD:
+            yield
+0x00000686 : 00000018
+            LABEL_SOFT_BIT_TLC_READBACK_MAIN:
+            offst    0, 0
+0x00000687 : 0000000a
+            setp        SETP_ID_ALL, 0, 0
+0x00000688 : 68550406
+            wk          I_CL_SYNC_RS_70H, C_WK_CTRL_5, LABEL_SOFT_BIT_TLC_READBACK_YIELD
+0x00000689 : 0032100e
+            cklvl       r0, 1, level_empty
+0x0000068a : 68500005
+            jnz    LABEL_SOFT_BIT_TLC_READBACK_YIELD, r0, 0
+0x0000068b : 00000000
+            nop
+0x0000068c : 00000000
+            nop
+0x0000068d : 00000000
+            nop
+0x0000068e : 00051008
+            stacp       r0, 1, 5
+0x0000068f : 68500005
+            jnz    LABEL_SOFT_BIT_TLC_READBACK_YIELD, r0, 0
+0x00000690 : 00061008
+            stacp       r0, 1, 6
+0x00000691 : 68500005
+            jnz         LABEL_SOFT_BIT_TLC_READBACK_YIELD, r0, 0
+0x00000692 : 6fc01005
+            jnz         LABEL_SYNC_TLC_SOFT_READBACK_CHK_CPL_START, r0, 1
+0x00000693 : 0000301a
+            LABEL_SOFT_READ_FEATURE_SET:
+            sbyt    R3, 0
+0x00000694 : 6af11022
+            LABEL_SOFT_READ_FEATURE_LOOP:
+            jne    LABEL_SOFT_READ_FEA_SET_NOT_LSB, 0, 1, 1
+0x00000695 : 0089101a
+            sbyt    R1, 137
+0x00000696 : 2f28100b
+                setpr           0, R1, 40, 47
+0x00000697 : 0000101a
+            sbyt    R1, 0
+0x00000698 : 0f08100b
+                setpr           0, R1, 8, 15    #  D1 == 0
+0x00000699 : 0000101a
+            sbyt    R1, 0
+0x0000069a : 1f18100b
+                setpr           0, R1, 24, 31   #  D3 == 0
+0x0000069b : 6a011122
+            jne    LABEL_SOFT_READ_FEA_SET_LSB_NOT_RR, 1, 1, 1
+0x0000069c : 0f08442a
+                    ccbit           68, 8, 15       #  GR1== cmd[ 75 :68]
+0x0000069d : 0700100b
+                    setpr           0,  R1, 0, 7    #  D0 == GR1
+0x0000069e : 17101324
+                    setpc           19, 16, 23      #  D2 == cmd[159:152]
+0x0000069f : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006a0 : 6a421122
+            LABEL_SOFT_READ_FEA_SET_LSB_NOT_RR:
+            jne    LABEL_SOFT_READ_FEA_SET_LSB_NOT_POS, 1, 1, 2
+0x000006a1 : 07001524
+                    setpc           21, 0, 7        #  D0 == cmd[175:168]
+0x000006a2 : 17101624
+                    setpc           22, 16, 23      #  D2 == cmd[183:176]
+0x000006a3 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006a4 : 6a831122
+            LABEL_SOFT_READ_FEA_SET_LSB_NOT_POS:
+            jne    LABEL_SOFT_READ_FEA_SET_LSB_NOT_NEG, 1, 1, 3
+0x000006a5 : 07001924
+                    setpc           25, 0, 7        #  D0 == cmd[207:200]
+0x000006a6 : 17101a24
+                    setpc           26, 16, 23      #  D2 == cmd[215:208]
+0x000006a7 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006a8 : 6ad41122
+            LABEL_SOFT_READ_FEA_SET_LSB_NOT_NEG:
+            jne    LABEL_SOFT_READ_FEA_SET_LSB_NOT_CLEAR, 1, 1, 4
+0x000006a9 : 0000101a
+            sbyt    R1, 0
+0x000006aa : 0700100b
+                    setpr           0, R1, 0,  7    #  D0 == 0
+0x000006ab : 1710100b
+                    setpr           0, R1, 16, 23   #  D2 == 0
+0x000006ac : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006ad : 00000000
+            LABEL_SOFT_READ_FEA_SET_LSB_NOT_CLEAR:
+                    nop
+0x000006ae : 6ad01005
+            jnz    LABEL_SOFT_READ_FEA_SET_LSB_NOT_CLEAR, 0, 1
+0x000006af : 6cc21022
+            LABEL_SOFT_READ_FEA_SET_NOT_LSB:
+            jne    LABEL_SOFT_READ_FEA_SET_NOT_CSB, 0, 1, 2
+0x000006b0 : 008a101a
+            sbyt    R1, 138
+0x000006b1 : 2f28100b
+                setpr           0, R1, 40, 47
+0x000006b2 : 0000101a
+            sbyt    R1, 0
+0x000006b3 : 1f18100b
+                setpr           0, R1, 24, 31    #  D3 == 0
+0x000006b4 : 6ba11122
+            jne    LABEL_SOFT_READ_FEA_SET_CSB_NOT_RR, 1, 1, 1
+0x000006b5 : 0f08442a
+                    ccbit           68, 8, 15       #  GR1== cmd[ 75: 68]
+0x000006b6 : 0700100b
+                    setpr           0,  R1, 0, 7    #  D0 == GR1
+0x000006b7 : 0f081324
+                    setpc           19, 8, 15       #  D1 == cmd[159:152]
+0x000006b8 : 17101424
+                    setpc           20, 16, 23      #  D2 == cmd[167:160]
+0x000006b9 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006ba : 6bf21122
+            LABEL_SOFT_READ_FEA_SET_CSB_NOT_RR:
+            jne    LABEL_SOFT_READ_FEA_SET_CSB_NOT_POS, 1, 1, 2
+0x000006bb : 07001524
+                    setpc           21, 0, 7        #  D0 == cmd[175:168]
+0x000006bc : 0f081624
+                    setpc           22, 8, 15       #  D1 == cmd[183:176]
+0x000006bd : 17101824
+                    setpc           24, 16, 23      #  D2 == cmd[199:192]
+0x000006be : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006bf : 6c431122
+            LABEL_SOFT_READ_FEA_SET_CSB_NOT_POS:
+            jne    LABEL_SOFT_READ_FEA_SET_CSB_NOT_NEG, 1, 1, 3
+0x000006c0 : 07001924
+                    setpc           25, 0, 7        #  D0 == cmd[207:200]
+0x000006c1 : 0f081a24
+                    setpc           26, 8, 15       #  D1 == cmd[215:208]
+0x000006c2 : 17101b24
+                    setpc           27, 16, 23      #  D2 == cmd[223:216]
+0x000006c3 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006c4 : 6ca41122
+            LABEL_SOFT_READ_FEA_SET_CSB_NOT_NEG:
+            jne    LABEL_SOFT_READ_FEA_SET_CSB_NOT_CLEAR, 1, 1, 4
+0x000006c5 : 0000101a
+            sbyt    R1, 0
+0x000006c6 : 0700100b
+                    setpr           0, R1, 0,  7    #  D0 == 0
+0x000006c7 : 0f08100b
+                    setpr           0, R1, 8,  15   #  D1 == 0
+0x000006c8 : 1710100b
+                    setpr           0, R1, 16, 23   #  D2 == 0
+0x000006c9 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006ca : 00000000
+            LABEL_SOFT_READ_FEA_SET_CSB_NOT_CLEAR:
+                    nop
+0x000006cb : 6ca01005
+            jnz    LABEL_SOFT_READ_FEA_SET_CSB_NOT_CLEAR, 0, 1
+0x000006cc : 6e731022
+            LABEL_SOFT_READ_FEA_SET_NOT_CSB:
+            jne    LABEL_SOFT_READ_FEA_SET_NOT_MSB, 0, 1, 3
+0x000006cd : 0089101a
+            sbyt    R1, 137
+0x000006ce : 2f28100b
+                setpr           0, R1, 40, 47
+0x000006cf : 0000101a
+            sbyt    R1, 0
+0x000006d0 : 0700100b
+                setpr           0, R1, 0, 7     #  D0 == 0
+0x000006d1 : 0000101a
+            sbyt    R1, 0
+0x000006d2 : 1710100b
+                setpr           0, R1, 16, 23   #  D2 == 0
+0x000006d3 : 6d811122
+            jne    LABEL_SOFT_READ_FEA_SET_MSB_NOT_RR, 1, 1, 1
+0x000006d4 : 0f08442a
+                    ccbit           68, 8, 15       #  GR1== cmd[ 75: 68]
+0x000006d5 : 0f08100b
+                    setpr           0,  R1, 8, 15   #  D1 == GR1
+0x000006d6 : 1f181324
+                    setpc           19, 24, 31      #  D3 == cmd[159:152]
+0x000006d7 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006d8 : 6dc21122
+            LABEL_SOFT_READ_FEA_SET_MSB_NOT_RR:
+            jne    LABEL_SOFT_READ_FEA_SET_MSB_NOT_POS, 1, 1, 2
+0x000006d9 : 0f081524
+                    setpc           21, 8, 15       #  D1 == cmd[175:168]
+0x000006da : 1f181624
+                    setpc           22, 24, 31      #  D3 == cmd[183:176]
+0x000006db : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006dc : 6e031122
+            LABEL_SOFT_READ_FEA_SET_MSB_NOT_POS:
+            jne    LABEL_SOFT_READ_FEA_SET_MSB_NOT_NEG, 1, 1, 3
+0x000006dd : 0f081924
+                    setpc           25, 8, 15       #  D1 == cmd[207:200]
+0x000006de : 1f181a24
+                    setpc           26, 24, 31      #  D3 == cmd[215:208]
+0x000006df : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006e0 : 6e541122
+            LABEL_SOFT_READ_FEA_SET_MSB_NOT_NEG:
+            jne    LABEL_SOFT_READ_FEA_SET_MSB_NOT_CLEAR, 1, 1, 4
+0x000006e1 : 0000101a
+            sbyt    R1, 0
+0x000006e2 : 0f08100b
+                    setpr           0, R1, 8,  15  #  D1 == 0
+0x000006e3 : 1f18100b
+                    setpr           0, R1, 24, 31  #  D3 == 0
+0x000006e4 : 6e901005
+            jnz    LABEL_SOFT_READ_FEA_SET_DONE, 0, 1
+0x000006e5 : 00000000
+            LABEL_SOFT_READ_FEA_SET_MSB_NOT_CLEAR:
+                    nop
+0x000006e6 : 6e501005
+            jnz    LABEL_SOFT_READ_FEA_SET_MSB_NOT_CLEAR, 0, 1
+0x000006e7 : 00000000
+            LABEL_SOFT_READ_FEA_SET_NOT_MSB:
+            nop
+0x000006e8 : 6e701005
+            jnz    LABEL_SOFT_READ_FEA_SET_NOT_MSB, 0, 1
+0x000006e9 : 0000101a
+            LABEL_SOFT_READ_FEA_SET_DONE:
+            sbyt    R1, 0
+0x000006ea : 0808182a
+            ccbit         24, 8, 8      ## GR[15:8]= lun in cmd
+0x000006eb : 2720100b
+            setpr    0, R1, 32, 39
+0x000006ec : 6f411122
+            jne    LABEL_SOFT_READ_FEA_SET_WK_NOT_RR, 1, 1, 1
+0x000006ed : 69340f06
+                wk              I_CL_SOFT_RR, C_WK_CTRL_4, LABEL_SOFT_READ_FEATURE_SET
+0x000006ee : 67e0001d
+            calre    0, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x000006ef : 0001101a
+            sbyt    R1, 1
+0x000006f0 : 0003101b
+                cmbyt           r0, R1, R3
+0x000006f1 : 6f600005
+            jnz    LABEL_SOFT_READ_SET_WK_DONE, r0, 0
+0x000006f2 : 0130311c
+            adbyt    1, R3, 0, R3, 1
+0x000006f3 : 69401005
+            jnz    LABEL_SOFT_READ_FEATURE_LOOP, 0, 1
+0x000006f4 : 69300f06
+            LABEL_SOFT_READ_FEA_SET_WK_NOT_RR:
+                wk              I_CL_SOFT_RR, C_WK_CTRL_0, LABEL_SOFT_READ_FEATURE_SET
+0x000006f5 : 67e0001d
+            calre    0, LABEL_SOFT_BIT_TLC_CHK_78H_MAIN
+0x000006f6 : 0000011d
+            LABEL_SOFT_READ_SET_WK_DONE:
+            calre    1, 0
+0x000006f7 : 0000000a
+            LABEL_SOFT_READ_RETRY_READ_DATA:
+            setp        SETP_ID_ALL, 0, 0
+0x000006f8 : 2f28200b
+            setpr           0,  R2, 40, 47
+0x000006f9 : 6f7c3506
+            wk              I_CL_SOFT_RR_POS,C_WK_CTRL_C, LABEL_SOFT_READ_RETRY_READ_DATA
+0x000006fa : 6850001d
+            calre    0, LABEL_SOFT_BIT_TLC_READBACK_YIELD
+0x000006fb : 0000011d
+            calre    1, 0
+0x000006fc : 000a0d06
+            LABEL_SYNC_TLC_SOFT_READBACK_CHK_CPL_START:
+            wk          I_CL_READ_P1, C_WK_CTRL_A, LABEL_0
+0x000006fd : 0096100e
+            LABEL_SYNC_TLC_SOFT_READBACK_CHK_CPL_YIELD:
+            cklvl       r0, 1, 150
+0x000006fe : 6fd10022
+            jne         LABEL_SYNC_TLC_SOFT_READBACK_CHK_CPL_YIELD, r0, 0 , 1
+0x000006ff : 00000018
+            offst    0, 0
+0x00000700 : dfdc0f2c
+            setcpl      15, 0, 220, 223
+0x00000701 : 00900103
+            incptr      1, 144
+0x00000702 : 70280709
+            LABEL_SYNC_TLC_SOFT_READBACK_FIRST_2K_RETI_ADDR:
+            reti        7, 0, 8, LABEL_SYNC_TLC_SOFT_READBACK_FIRST_2K_RETI_ADDR
+0x00000703 : 0104100e
+            LABEL_SYNC_TLC_SOFT_READBACK_4K_LEVEL_CHK:
+            cklvl       r0, 1, 260
+0x00000704 : 70310022
+            jne         LABEL_SYNC_TLC_SOFT_READBACK_4K_LEVEL_CHK, r0, 0 , 1
+0x00000705 : 00000018
+            offst    0, 0
+0x00000706 : dfdc1f2c
+            setcpl      15, 1, 220, 223
+0x00000707 : 53440d2c
+            setcpl      13, 0, 68, 83
+0x00000708 : 00900103
+            incptr      1, 144
+0x00000709 : 33400709
+            LABEL_SYNC_TLC_SOFT_READBACK_RETURN_START:
+            reti        7, 0, 0, LABEL_SYNC_TLC_READBACK_RETURN_START
+0x0000070a : 0000011d
+            calre       1, LABEL_0
